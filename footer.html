@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kontak Darurat & Pelaporan</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+
+    <link rel="stylesheet" href="styles_css/navbar.css" />
+    <link rel="stylesheet" href="styles_css/footer.css" />
+  </head>
+
+  <body>
+    <footer class="footer bg-dark text-light mt-5">
+      <div class="main"></div>
+
+      <div class="footer">
+        <div class="bubbles">
+          <div
+            class="bubble"
+            style="
+              --size: 3.5rem;
+              --distance: 8.5rem;
+              --position: 15%;
+              --time: 3s;
+              --delay: -1s;
+            "
+          ></div>
+          <div
+            class="bubble"
+            style="
+              --size: 2.8rem;
+              --distance: 9.2rem;
+              --position: 78%;
+              --time: 4s;
+              --delay: -2.5s;
+            "
+          ></div>
+          <div
+            class="bubble"
+            style="
+              --size: 4.1rem;
+              --distance: 7.1rem;
+              --position: 40%;
+              --time: 2.5s;
+              --delay: -0.5s;
+            "
+          ></div>
+        </div>
+
+        <div class="content">
+          <div class="col-1-brand">
+            <div class="brand-info">
+              <span class="logo-text">VolcanoPedia</span>
+            </div>
+
+            <p>
+              Platform informasi Gunung Api dan kebencanaan untuk membantu
+              masyarakat dalam mitigasi dan respons cepat terhadap erupsi.
+            </p>
+
+            <div class="social-icons">
+              <a href="#"><i class="fab fa-facebook-f"></i></a>
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <a href="#"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+
+          <div class="col-2-links">
+            <b>Tautan Cepat</b>
+            <a href="#">Halaman Utama</a>
+            <a href="#">Peta Interaktif</a>
+            <a href="#">Informasi Gunung Api</a>
+            <a href="#">Statistik</a>
+            <a href="#">Kontak Darurat & Pelaporan</a>
+          </div>
+
+          <div class="col-3-contact">
+            <b>Kontak Kami</b>
+
+            <div class="contact-item">
+              <i class="fas fa-map-marker-alt"></i>
+              <span>Yogyakarta, Indonesia</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-phone"></i>
+              <span>+62 21 1234 5678</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-envelope"></i>
+              <span>info@volcanopedia.id</span>
+            </div>
+            <div class="contact-item">
+              <i class="fas fa-clock"></i>
+              <span>24/7 Layanan Darurat</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="copyright">
+          <p class="fw-bold">VolcanoPedia ©2024.</p>
+        </div>
+      </div>
+
+      <svg style="position: fixed; top: 100vh">
+        <defs>
+          <filter id="blob">
+            <feGaussianBlur
+              in="SourceGraphic"
+              stdDeviation="10"
+              result="blur"
+            ></feGaussianBlur>
+            <feColorMatrix
+              in="blur"
+              mode="matrix"
+              values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 19 -9"
+              result="blob"
+            ></feColorMatrix>
+          </filter>
+        </defs>
+      </svg>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
