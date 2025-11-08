@@ -194,7 +194,7 @@
 <body>
   <?php include 'navbar.html' ?>
 
-  <header style=" ">
+  <header>
     <h1 class="text-2xl">Peta Gunung Berapi Indonesia — Zona & Jalur Evakuasi</h1>
   </header>
 
