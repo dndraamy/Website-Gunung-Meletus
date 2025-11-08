@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="styles_css/index.css" />
 </head>
-<body>
+<body style="background-color: black;">
 
     <!-- Alert Banner untuk status penting -->
     <div class="alert-banner warning">
@@ -24,20 +24,20 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <h2>Pemantauan Aktivitas Gunung Api di Indonesia</h2>
+            <h2 style="padding-top: 100px;">Pemantauan Aktivitas Gunung Api di Indonesia</h2>
             <p>Sistem informasi terpadu untuk memantau status terkini gunung api, peta kawasan rawan bencana, dan informasi evakuasi.</p>
             
             <div class="hero-stats">
                 <div class="stat-box">
-                    <span class="stat-number"><?php echo $total_gunung; ?></span>
+                    <span class="stat-number">160</span>
                     <span class="stat-label">Gunung Api Dipantau</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number"><?php echo $status_awas; ?></span>
+                    <span class="stat-number">3</span>
                     <span class="stat-label">Status Awas</span>
                 </div>
                 <div class="stat-box">
-                    <span class="stat-number"><?php echo $status_siaga; ?></span>
+                    <span class="stat-number">6</span>
                     <span class="stat-label">Status Siaga</span>
                 </div>
                 <div class="stat-box">
