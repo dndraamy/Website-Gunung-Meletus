@@ -8,7 +8,6 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         :root {
             --primary: #2563eb;
@@ -260,8 +259,8 @@
         
         .search-results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
             margin-bottom: 40px;
         }
         
@@ -280,7 +279,7 @@
         }
         
         .result-image {
-            height: 220px;
+            height: 250px;
             width: 100%;
             object-fit: cover;
             border-bottom: 1px solid #e2e8f0;
@@ -448,68 +447,44 @@
         .stat-waspada { color: var(--warning); }
         .stat-siaga { color: var(--danger); }
 
-        /* Live Map Section */
-        .map-section {
-            padding: 80px 0;
-            background: var(--light);
-        }
-
-        .map-container {
-            height: 500px;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-
-        #liveMap {
-            height: 100%;
+        /* Volcano Cards - 4 per baris dengan ukuran lebih besar dan container lebar */
+        .volcano-grid-container {
             width: 100%;
-            border-radius: 20px;
+            max-width: 2100px;
+            margin: 0 auto;
+            padding: 0 25px;
+            height: auto;
         }
 
-        .map-controls {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: white;
-            padding: 15px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            min-width: 200px;
-        }
-
-        .map-legend {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            color: var(--dark);
-        }
-
-        .legend-color {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-
-        .legend-normal { background: var(--success); }
-        .legend-waspada { background: var(--warning); }
-        .legend-siaga { background: var(--danger); }
-        
-        /* Volcano Cards */
         .volcano-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
             margin-bottom: 80px;
+        }
+        
+        @media (max-width: 1400px) {
+            .volcano-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .volcano-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .volcano-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .volcano-grid-container {
+                padding: 0 15px;
+            }
         }
         
         .volcano-card {
@@ -519,6 +494,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.4s ease;
             border: 1px solid rgba(0, 0, 0, 0.05);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .volcano-card:hover {
@@ -535,21 +513,26 @@
         
         .volcano-content {
             padding: 25px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
         
         .volcano-name {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--dark);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
+            line-height: 1.3;
         }
         
         .volcano-info {
             color: var(--gray);
             margin-bottom: 20px;
+            flex: 1;
         }
         
         /* Footer */
@@ -638,48 +621,41 @@
             box-shadow: 0 12px 35px rgba(37, 99, 235, 0.4);
         }
 
-        /* Custom Leaflet Styles */
-        .leaflet-popup-content {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            border-radius: 12px;
-        }
-
-        .custom-popup {
-            padding: 10px;
-            min-width: 200px;
-        }
-
-        .popup-title {
-            font-weight: 700;
-            color: var(--dark);
-            margin-bottom: 8px;
-            font-size: 1.1rem;
-        }
-
-        .popup-status {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 8px;
-            border-radius: 12px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-        }
-
-        /* Mitigation Section Styles */
+        /* Mitigation Section Styles - 3 per baris dengan container normal */
         .mitigation-section {
             padding: 80px 0;
             background: var(--light);
+        }
+
+        .mitigation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 992px) {
+            .mitigation-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .mitigation-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
         }
 
         .mitigation-card {
             background: white;
             border-radius: 20px;
             padding: 30px;
-            margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
 
         .mitigation-card:hover {
@@ -716,26 +692,51 @@
             flex-shrink: 0;
         }
 
+        /* Emergency Contacts - Full width di bawah 3 card mitigasi */
+        .emergency-contacts-full {
+            grid-column: 1 / -1;
+            margin-top: 30px;
+        }
+
         .emergency-contacts {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(4, 1fr);
             gap: 20px;
-            margin-top: 30px;
+            margin-top: 20px;
+        }
+        
+        @media (max-width: 992px) {
+            .emergency-contacts {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .emergency-contacts {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
         }
 
         .contact-card {
             background: white;
-            padding: 20px;
-            border-radius: 12px;
+            padding: 25px;
+            border-radius: 15px;
             text-align: center;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
         }
 
         .contact-icon {
-            font-size: 2rem;
+            font-size: 2.5rem;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 15px;
         }
 
         /* Tombol Panggilan Darurat */
@@ -743,17 +744,17 @@
             background: linear-gradient(45deg, var(--success), #10b981);
             color: white;
             border: none;
-            padding: 8px 16px;
-            border-radius: 8px;
+            padding: 10px 20px;
+            border-radius: 10px;
             font-weight: 600;
             width: 100%;
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 5px;
-            margin-top: 10px;
-            font-size: 0.85rem;
+            gap: 8px;
+            margin-top: 15px;
+            font-size: 0.9rem;
         }
 
         .btn-call:hover {
@@ -836,7 +837,7 @@
             border: none;
             font-size: 1.8rem;
             color: var(--gray);
-            cursor: pointer;
+            cursor: button;
             transition: all 0.3s ease;
         }
 
@@ -944,6 +945,19 @@
                 padding: 12px 16px;
                 font-size: 0.9rem;
             }
+            
+            .section-title {
+                font-size: 1.8rem;
+                margin-bottom: 30px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
         }
     </style>
 </head>
@@ -967,11 +981,7 @@
                         <i class="fas fa-shield-alt me-2"></i>Mitigasi
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#liveMapSection">
-                        <i class="fas fa-map-marked-alt me-2"></i>Peta Live
-                    </a>
-                </li>
+                <!-- Tombol Peta dihapus sesuai permintaan -->
             </ul>
         </div>
     </div>
@@ -985,7 +995,7 @@
             <h1 class="hero-title">Sistem Monitoring Gunung Api</h1>
             <p class="hero-subtitle">Pantau aktivitas gunung berapi di Indonesia secara real-time dan dapatkan informasi mitigasi bencana</p>
             <div class="mt-4">
-                <button class="btn btn-light btn-lg rounded-pill px-4 me-3" onclick="scrollToSection('liveMapSection')">
+                <button class="btn btn-light btn-lg rounded-pill px-4 me-3" onclick="scrollToSection('volcanoes')">
                     <i class="fas fa-chart-line me-2"></i>Monitoring Live
                 </button>
                 <button class="btn btn-outline-light btn-lg rounded-pill px-4" onclick="scrollToSection('volcanoes')">
@@ -1037,35 +1047,8 @@
         </div>
     </div>
 
-    <!-- Live Map Section -->
-    <section class="map-section" id="liveMapSection">
-        <div class="container">
-            <h2 class="section-title">Peta Live Gunung Api</h2>
-            <div class="map-container position-relative">
-                <div id="liveMap"></div>
-                <div class="map-controls">
-                    <h6 class="fw-bold mb-3">Legenda Status</h6>
-                    <div class="map-legend">
-                        <div class="legend-item">
-                            <div class="legend-color legend-normal"></div>
-                            <span>Normal</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color legend-waspada"></div>
-                            <span>Waspada</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color legend-siaga"></div>
-                            <span>Siaga</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Main Content - Gunung Api di Indonesia -->
-    <div class="container" id="volcanoes">
+    <!-- Main Content - Gunung Api di Indonesia dengan container lebar -->
+    <div id="volcanoes">
         <h2 class="section-title">Gunung Api di Indonesia</h2>
         
         <!-- Search Section - Simplified -->
@@ -1113,182 +1096,182 @@
             </div>
         </section>
 
-        <!-- All Volcanoes Grid -->
-        <div class="volcano-grid" id="volcanoGrid">
-            <?php
-            $result = mysqli_query($conn, "SELECT * FROM gunung");
-            $allVolcanoes = [];
-            while ($row = mysqli_fetch_assoc($result)) {
-                $status_class = 'tag-normal';
-                $status_icon = 'fas fa-check-circle';
-                $status_text = 'Normal';
-                
-                if (strpos(strtolower($row['status']), 'waspada') !== false) {
-                    $status_class = 'tag-waspada';
-                    $status_icon = 'fas fa-exclamation-triangle';
-                    $status_text = 'Waspada';
-                } elseif (strpos(strtolower($row['status']), 'siaga') !== false) {
-                    $status_class = 'tag-siaga';
-                    $status_icon = 'fas fa-fire';
-                    $status_text = 'Siaga';
-                }
-                
-                $allVolcanoes[] = [
-                    'id' => $row['id'],
-                    'name' => $row['nama_gunung'],
-                    'location' => $row['lokasi'],
-                    'status' => $status_text,
-                    'image' => $row['gambar'],
-                    'elevation' => $row['ketinggian'],
-                    'status_detail' => $row['status'],
-                    'status_class' => $status_class,
-                    'status_icon' => $status_icon
-                ];
-            ?>
-            <div class="volcano-card" data-name="<?php echo strtolower($row['nama_gunung']); ?>" data-location="<?php echo strtolower($row['lokasi']); ?>" data-status="<?php echo strtolower($status_text); ?>">
-                <img src="image/<?php echo $row['gambar']; ?>" class="volcano-image" alt="<?php echo $row['nama_gunung']; ?>">
-                <div class="volcano-content">
-                    <div class="d-flex justify-content-between align-items-start mb-3">
-                        <h3 class="volcano-name">
-                            <i class="fas fa-mountain"></i><?php echo $row['nama_gunung']; ?>
-                        </h3>
-                        <span class="status-tag <?php echo $status_class; ?>">
-                            <i class="<?php echo $status_icon; ?>"></i><?php echo $status_text; ?>
-                        </span>
+        <!-- All Volcanoes Grid - 4 per baris dengan container lebar -->
+        <div class="volcano-grid-container">
+            <div class="volcano-grid" id="volcanoGrid">
+                <?php
+                $result = mysqli_query($conn, "SELECT * FROM gunung");
+                $allVolcanoes = [];
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $status_class = 'tag-normal';
+                    $status_icon = 'fas fa-check-circle';
+                    $status_text = 'Normal';
+                    
+                    if (strpos(strtolower($row['status']), 'waspada') !== false) {
+                        $status_class = 'tag-waspada';
+                        $status_icon = 'fas fa-exclamation-triangle';
+                        $status_text = 'Waspada';
+                    } elseif (strpos(strtolower($row['status']), 'siaga') !== false) {
+                        $status_class = 'tag-siaga';
+                        $status_icon = 'fas fa-fire';
+                        $status_text = 'Siaga';
+                    }
+                    
+                    $allVolcanoes[] = [
+                        'id' => $row['id'],
+                        'name' => $row['nama_gunung'],
+                        'location' => $row['lokasi'],
+                        'status' => $status_text,
+                        'image' => $row['gambar'],
+                        'elevation' => $row['ketinggian'],
+                        'status_detail' => $row['status'],
+                        'status_class' => $status_class,
+                        'status_icon' => $status_icon
+                    ];
+                ?>
+                <div class="volcano-card" data-name="<?php echo strtolower($row['nama_gunung']); ?>" data-location="<?php echo strtolower($row['lokasi']); ?>" data-status="<?php echo strtolower($status_text); ?>">
+                    <img src="image/<?php echo $row['gambar']; ?>" class="volcano-image" alt="<?php echo $row['nama_gunung']; ?>">
+                    <div class="volcano-content">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h3 class="volcano-name">
+                                <i class="fas fa-mountain"></i><?php echo $row['nama_gunung']; ?>
+                            </h3>
+                            <span class="status-tag <?php echo $status_class; ?>">
+                                <i class="<?php echo $status_icon; ?>"></i><?php echo $status_text; ?>
+                            </span>
+                        </div>
+                        <div class="volcano-info">
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <strong>Lokasi:</strong> <?php echo $row['lokasi']; ?>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-mountain"></i>
+                                </div>
+                                <div>
+                                    <strong>Ketinggian:</strong> <?php echo $row['ketinggian']; ?> mdpl
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <div class="info-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
+                                <div>
+                                    <strong>Aktivitas:</strong> <?php echo $row['status']; ?>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="detail_gunung.php?id=<?php echo $row['id']; ?>" class="btn-detail">
+                            <i class="fas fa-search"></i>Lihat Detail Lengkap
+                        </a>
                     </div>
-                    <div class="volcano-info">
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <i class="fas fa-map-marker-alt"></i>
-                            </div>
-                            <div>
-                                <strong>Lokasi:</strong> <?php echo $row['lokasi']; ?>
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <i class="fas fa-mountain"></i>
-                            </div>
-                            <div>
-                                <strong>Ketinggian:</strong> <?php echo $row['ketinggian']; ?> mdpl
-                            </div>
-                        </div>
-                        <div class="info-item">
-                            <div class="info-icon">
-                                <i class="fas fa-chart-line"></i>
-                            </div>
-                            <div>
-                                <strong>Aktivitas:</strong> <?php echo $row['status']; ?>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="detail_gunung.php?id=<?php echo $row['id']; ?>" class="btn-detail">
-                        <i class="fas fa-search"></i>Lihat Detail Lengkap
-                    </a>
                 </div>
+                <?php } ?>
             </div>
-            <?php } ?>
         </div>
     </div>
 </section>
 
-<!-- Mitigation Section -->
+<!-- Mitigation Section dengan container normal -->
 <section class="mitigation-section" id="mitigation">
     <div class="container">
         <h2 class="section-title">Mitigasi Bencana Gunung Api</h2>
         
-        <div class="row">
-            <div class="col-md-6">
-                <div class="mitigation-card">
-                    <div class="mitigation-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
+        <div class="mitigation-grid">
+            <!-- Card 1: Sebelum Erupsi -->
+            <div class="mitigation-card">
+                <div class="mitigation-icon">
+                    <i class="fas fa-exclamation-triangle"></i>
+                </div>
+                <h3>Sebelum Erupsi</h3>
+                <div class="mitigation-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h5>Kenali Tanda-tanda</h5>
+                        <p>Pelajari tanda-tanda peningkatan aktivitas vulkanik seperti gempa vulkanik, perubahan suhu, dan emisi gas.</p>
                     </div>
-                    <h3>Sebelum Erupsi</h3>
-                    <div class="mitigation-step">
-                        <div class="step-number">1</div>
-                        <div>
-                            <h5>Kenali Tanda-tanda</h5>
-                            <p>Pelajari tanda-tanda peningkatan aktivitas vulkanik seperti gempa vulkanik, perubahan suhu, dan emisi gas.</p>
-                        </div>
+                </div>
+                <div class="mitigation-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h5>Siapkan Rencana Evakuasi</h5>
+                        <p>Buat rencana evakuasi keluarga dan tentukan titik kumpul yang aman dari jalur lahar dan awan panas.</p>
                     </div>
-                    <div class="mitigation-step">
-                        <div class="step-number">2</div>
-                        <div>
-                            <h5>Siapkan Rencana Evakuasi</h5>
-                            <p>Buat rencana evakuasi keluarga dan tentukan titik kumpul yang aman dari jalur lahar dan awan panas.</p>
-                        </div>
-                    </div>
-                    <div class="mitigation-step">
-                        <div class="step-number">3</div>
-                        <div>
-                            <h5>Siapkan Tas Darurat</h5>
-                            <p>Siapkan tas berisi makanan, air, obat-obatan, dokumen penting, dan masker untuk setidaknya 3 hari.</p>
-                        </div>
+                </div>
+                <div class="mitigation-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h5>Siapkan Tas Darurat</h5>
+                        <p>Siapkan tas berisi makanan, air, obat-obatan, dokumen penting, dan masker untuk setidaknya 3 hari.</p>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-6">
-                <div class="mitigation-card">
-                    <div class="mitigation-icon">
-                        <i class="fas fa-running"></i>
+            <!-- Card 2: Saat Erupsi -->
+            <div class="mitigation-card">
+                <div class="mitigation-icon">
+                    <i class="fas fa-running"></i>
+                </div>
+                <h3>Saat Erupsi</h3>
+                <div class="mitigation-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h5>Ikuti Instruksi Resmi</h5>
+                        <p>Dengarkan informasi dari PVMBG, BMKG, dan BNPB melalui radio atau media resmi.</p>
                     </div>
-                    <h3>Saat Erupsi</h3>
-                    <div class="mitigation-step">
-                        <div class="step-number">1</div>
-                        <div>
-                            <h5>Ikuti Instruksi Resmi</h5>
-                            <p>Dengarkan informasi dari PVMBG, BMKG, dan BNPB melalui radio atau media resmi.</p>
-                        </div>
+                </div>
+                <div class="mitigation-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h5>Evakuasi ke Tempat Aman</h5>
+                        <p>Segera evakuasi ke tempat yang lebih tinggi dan menjauhi lembah sungai yang berpotensi dilalui lahar.</p>
                     </div>
-                    <div class="mitigation-step">
-                        <div class="step-number">2</div>
-                        <div>
-                            <h5>Evakuasi ke Tempat Aman</h5>
-                            <p>Segera evakuasi ke tempat yang lebih tinggi dan menjauhi lembah sungai yang berpotensi dilalui lahar.</p>
-                        </div>
-                    </div>
-                    <div class="mitigation-step">
-                        <div class="step-number">3</div>
-                        <div>
-                            <h5>Lindungi Diri</h5>
-                            <p>Gunakan masker untuk melindungi pernapasan dari abu vulkanik dan kenakan pakaian tertutup.</p>
-                        </div>
+                </div>
+                <div class="mitigation-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h5>Lindungi Diri</h5>
+                        <p>Gunakan masker untuk melindungi pernapasan dari abu vulkanik dan kenakan pakaian tertutup.</p>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-6">
-                <div class="mitigation-card">
-                    <div class="mitigation-icon">
-                        <i class="fas fa-home"></i>
+            <!-- Card 3: Setelah Erupsi -->
+            <div class="mitigation-card">
+                <div class="mitigation-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h3>Setelah Erupsi</h3>
+                <div class="mitigation-step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <h5>Tunggu Izin Kembali</h5>
+                        <p>Tunggu hingga pihak berwenang menyatakan aman untuk kembali ke rumah.</p>
                     </div>
-                    <h3>Setelah Erupsi</h3>
-                    <div class="mitigation-step">
-                        <div class="step-number">1</div>
-                        <div>
-                            <h5>Tunggu Izin Kembali</h5>
-                            <p>Tunggu hingga pihak berwenang menyatakan aman untuk kembali ke rumah.</p>
-                        </div>
+                </div>
+                <div class="mitigation-step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <h5>Bersihkan Abu Vulkanik</h5>
+                        <p>Bersihkan atap dari abu vulkanik untuk mencegah kerusakan struktur bangunan.</p>
                     </div>
-                    <div class="mitigation-step">
-                        <div class="step-number">2</div>
-                        <div>
-                            <h5>Bersihkan Abu Vulkanik</h5>
-                            <p>Bersihkan atap dari abu vulkanik untuk mencegah kerusakan struktur bangunan.</p>
-                        </div>
-                    </div>
-                    <div class="mitigation-step">
-                        <div class="step-number">3</div>
-                        <div>
-                            <h5>Periksa Kesehatan</h5>
-                            <p>Periksakan kesehatan terutama masalah pernapasan akibat paparan abu vulkanik.</p>
-                        </div>
+                </div>
+                <div class="mitigation-step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <h5>Periksa Kesehatan</h5>
+                        <p>Periksakan kesehatan terutama masalah pernapasan akibat paparan abu vulkanik.</p>
                     </div>
                 </div>
             </div>
             
-            <div class="col-md-6">
+            <!-- Kontak Darurat - Full width di bawah 3 card -->
+            <div class="emergency-contacts-full">
                 <div class="mitigation-card">
                     <div class="mitigation-icon">
                         <i class="fas fa-phone-alt"></i>
@@ -1380,7 +1363,6 @@
                     <li><a href="#home" class="text-light text-decoration-none">Beranda</a></li>
                     <li><a href="#volcanoes" class="text-light text-decoration-none">Mount Explorer</a></li>
                     <li><a href="#mitigation" class="text-light text-decoration-none">Mitigasi</a></li>
-                    <li><a href="#liveMapSection" class="text-light text-decoration-none">Peta Live</a></li>
                 </ul>
             </div>
             <div class="col-md-3">
@@ -1471,101 +1453,14 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <script>
-    // Data gunung dari PHP
+    // Data gunung dari PHP (keep for search/features)
     const allVolcanoes = <?php echo json_encode($allVolcanoes); ?>;
-
-    // Initialize map
-    const map = L.map('liveMap').setView([-2.5489, 118.0149], 5);
-
-    // Add tile layer
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // Function to get marker color based on status
-    function getMarkerColor(status) {
-        switch(status) {
-            case 'siaga': return '#dc2626';
-            case 'waspada': return '#d97706';
-            case 'normal': return '#059669';
-            default: return '#64748b';
-        }
-    }
-
-    // Function to get status icon
-    function getStatusIcon(status) {
-        switch(status) {
-            case 'siaga': return 'fas fa-fire';
-            case 'waspada': return 'fas fa-exclamation-triangle';
-            case 'normal': return 'fas fa-check-circle';
-            default: return 'fas fa-mountain';
-        }
-    }
-
-    // Add markers for each volcano
-    allVolcanoes.forEach(volcano => {
-        const markerColor = getMarkerColor(volcano.status);
-        const statusIcon = getStatusIcon(volcano.status);
-        
-        // Create custom icon
-        const volcanoIcon = L.divIcon({
-            className: 'custom-volcano-marker',
-            html: `
-                <div style="
-                    background: ${markerColor};
-                    width: 25px;
-                    height: 25px;
-                    border-radius: 50%;
-                    border: 3px solid white;
-                    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: white;
-                    font-size: 12px;
-                ">
-                    <i class="${statusIcon}"></i>
-                </div>
-            `,
-            iconSize: [25, 25],
-            iconAnchor: [12, 12]
-        });
-
-        // Create marker (using approximate coordinates for demo)
-        const lat = -2.5 + (Math.random() * 5);
-        const lng = 115 + (Math.random() * 10);
-        const marker = L.marker([lat, lng], { icon: volcanoIcon }).addTo(map);
-
-        // Create popup content
-        const popupContent = `
-            <div class="custom-popup">
-                <div class="popup-title">${volcano.name}</div>
-                <div class="popup-status ${volcano.status === 'siaga' ? 'tag-siaga' : volcano.status === 'waspada' ? 'tag-waspada' : 'tag-normal'}">
-                    <i class="${statusIcon}"></i>${volcano.status.toUpperCase()}
-                </div>
-                <div><strong>Lokasi:</strong> ${volcano.location}</div>
-                <div><strong>Ketinggian:</strong> ${volcano.elevation}</div>
-                <div style="margin-top: 10px;">
-                    <button class="btn-detail" style="padding: 8px 16px; font-size: 0.8rem;" onclick="scrollToSection('mitigation')">
-                        <i class="fas fa-shield-alt"></i> Lihat Mitigasi
-                    </button>
-                </div>
-            </div>
-        `;
-
-        marker.bindPopup(popupContent);
-    });
 
     // Fungsi untuk melakukan panggilan telepon
     function makeCall(phoneNumber) {
-        // Konfirmasi sebelum melakukan panggilan
         if (confirm(`Apakah Anda yakin ingin menghubungi ${phoneNumber}?`)) {
-            // Untuk perangkat mobile, buka aplikasi telepon
             window.location.href = `tel:${phoneNumber}`;
-            
-            // Untuk desktop, tampilkan pesan
             if (!/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
                 alert(`Untuk perangkat desktop, silakan hubungi nomor ${phoneNumber} secara manual.`);
             }
@@ -1744,14 +1639,13 @@
     // Clear search function
     function clearSearch() {
         document.getElementById('searchInput').value = '';
-        currentSearchTerm = '';
-        
+        // hide local currentSearchTerm if present
         // Hide search results and show all volcanoes
         document.getElementById('searchResults').style.display = 'none';
         document.getElementById('volcanoGrid').style.display = 'grid';
-        
         // Hide suggestions
-        document.getElementById('searchSuggestions').style.display = 'none';
+        const ss = document.getElementById('searchSuggestions');
+        if (ss) ss.style.display = 'none';
     }
 
     // Show all volcanoes function
@@ -1762,9 +1656,8 @@
 
     // Scroll to section function
     function scrollToSection(sectionId) {
-        document.getElementById(sectionId).scrollIntoView({ 
-            behavior: 'smooth' 
-        });
+        const el = document.getElementById(sectionId);
+        if (el) el.scrollIntoView({ behavior: 'smooth' });
     }
 
     // Add click event untuk floating action
@@ -1786,7 +1679,7 @@
 
     // Hero section buttons
     document.querySelector('.hero .btn-light').addEventListener('click', function() {
-        scrollToSection('liveMapSection');
+        scrollToSection('volcanoes');
     });
 
     document.querySelector('.hero .btn-outline-light').addEventListener('click', function() {
