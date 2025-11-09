@@ -20,7 +20,7 @@
         <section class="header-section text-center p-4 rounded-4 mb-5">
             <h1 class="fw-bold display-6 text-white">Data Korban & Statistik (2018-2025)</h1>
             <p class="lead mx-auto" style="max-width: 700px; color: white">
-                TES Halaman ini menyediakan daftar kontak penting yang dapat dihubungi saat terjadi bencana gunung meletus, serta fitur untuk melaporkan kondisi di lokasi Anda.
+                 Halaman ini menyediakan daftar kontak penting yang dapat dihubungi saat terjadi bencana gunung meletus, serta fitur untuk melaporkan kondisi di lokasi Anda.
             </p>
         </section>
 
