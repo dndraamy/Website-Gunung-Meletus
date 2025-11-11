@@ -84,49 +84,38 @@
                     Lihat Data <i class="fas fa-arrow-right"></i>
                 </a>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-phone-alt"></i>
-                </div>
-                <h3 class="feature-title">Kontak Darurat & Sumber Daya</h3>
-                <p class="feature-desc">Kontak darurat, posko bantuan, rumah sakit, dan sumber daya penting.</p>
-                <a href="kontak_darurat.php" class="feature-link">
-                    Hubungi <i class="fas fa-arrow-right"></i>
-                </a>
-            </div>
         </section>
 
         <!-- Quick Actions -->
         <section class="quick-actions">
             <h2 class="section-title">Akses Cepat</h2>
             <div class="action-cards">
-                <a href="gunung.php" class="action-card">
+                <a href="informasi_gunung.php" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-list"></i>
                     </div>
                     <div class="action-title">Daftar Gunung Api</div>
                     <div class="action-desc">Lihat semua gunung api yang dipantau</div>
                 </a>
-                <a href="map.php" class="action-card">
+                <a href="daftarlokasi.php" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-map"></i>
                     </div>
                     <div class="action-title">Peta Interaktif</div>
                     <div class="action-desc">Eksplorasi peta KRB dan jalur evakuasi</div>
                 </a>
-                <a href="pengumuman.php" class="action-card">
+                <a href="statistik.php" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-bullhorn"></i>
                     </div>
-                    <div class="action-title">Pengumuman</div>
+                    <div class="action-title">Data Korban</div>
                     <div class="action-desc">Informasi terbaru dan peringatan</div>
                 </a>
-                <a href="kontak_darurat.php" class="action-card">
+                <a href="page_kontak.php" class="action-card">
                     <div class="action-icon">
                         <i class="fas fa-phone-alt"></i>
                     </div>
-                    <div class="action-title">Kontak Darurat</div>
+                    <div class="action-title">Pelaporan Cepat</div>
                     <div class="action-desc">Hubungi pihak berwenang</div>
                 </a>
             </div>
@@ -181,40 +170,6 @@
                         <i class="fas fa-expand"></i> Layar Penuh
                     </button>
                 </div>
-            </div>
-        </section>
-
-        <!-- News Section -->
-        <section class="news-section">
-            <h2 class="section-title">Pengumuman Penting & Berita Terbaru</h2>
-            <div class="news-cards">
-                <?php if(empty($pengumuman)): ?>
-                <div class="news-card">
-                    <div class="news-content">
-                        <p>Tidak ada pengumuman terbaru.</p>
-                    </div>
-                </div>
-                <?php else: ?>
-                <?php foreach($pengumuman as $news): ?>
-                <div class="news-card">
-                    <div class="news-image" style="background-image: url('https://images.unsplash.com/photo-1546059621-7c0a4bd1d65f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80')"></div>
-                    <div class="news-content">
-                        <p class="news-date">
-                            <i class="far fa-calendar-alt"></i>
-                            <?php echo date('d F Y', strtotime($news['tanggal'])); ?>
-                        </p>
-                        <h3 class="news-title"><?php echo htmlspecialchars($news['judul']); ?></h3>
-                        <p class="news-excerpt"><?php 
-                            $excerpt = strip_tags($news['isi']);
-                            echo strlen($excerpt) > 150 ? substr($excerpt, 0, 150) . '...' : $excerpt;
-                        ?></p>
-                        <a href="pengumuman_detail.php?id=<?php echo $news['id']; ?>" class="read-more">
-                            Baca Selengkapnya <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-                <?php endforeach; ?>
-                <?php endif; ?>
             </div>
         </section>
     </main>
