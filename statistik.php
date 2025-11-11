@@ -1,3 +1,19 @@
+<?php
+include 'koneksi.php';
+
+$sql = "SELECT id, gunung, tanggal, tahun, lokasi, provinsi, meninggal, luka, pengungsi, dampak, status, prediksi, ketinggian, status_gunung FROM gunung_api ORDER BY tahun DESC, tanggal DESC";
+$result = $conn->query($sql);
+
+$dataArray = [];
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $dataArray[] = $row;
+    }
+}
+
+$conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 
@@ -19,8 +35,8 @@
     <main class="content-wrapper">
         <section class="header-section text-center p-4 rounded-4 mb-5">
             <h1 class="fw-bold display-6 text-white">Data Korban & Statistik (2018-2025)</h1>
-            <p class="lead mx-auto" style="max-width: 700px; color: white">
-                Halaman ini menyediakan daftar kontak penting yang dapat dihubungi saat terjadi bencana gunung meletus, serta fitur untuk melaporkan kondisi di lokasi Anda.
+            <p class="lead mx-auto" style="max-width: 800px; color: white">
+                Halaman ini menyajikan ringkasan data kejadian erupsi, dampak, dan korban jiwa dari berbagai gunung api di Indonesia selama periode tertentu.
             </p>
         </section>
 
@@ -60,6 +76,7 @@
                                 <option value="Jambi">Jambi</option>
                                 <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
                                 <option value="Sumatera Barat">Sumatera Barat</option>
+                                <!-- Tambahkan opsi provinsi lainnya sesuai data -->
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -77,7 +94,7 @@
                             <label class="form-label fw-bold">Pencarian Nama Gunung</label>
                             <div class="input-group">
                                 <input type="text" class="form-control" id="searchGunung" placeholder="Cari nama gunung...">
-                                <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" type="button" id="clearSearch">
+                                <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" type="button" id="clearSearch" style="transition: all 0.3s ease; margin-left: 15px;">
                                     <i class="fas fa-times"></i>
                                 </button>
                             </div>
@@ -85,10 +102,10 @@
                     </div>
                     <div class="row mt-3">
                         <div class="col-12">
-                            <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" id="btnFilter">
+                            <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" id="btnFilter" style="transition: all 0.3s ease;">
                                 <i class="fas fa-filter me-1"></i>Terapkan Filter
                             </button>
-                            <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" id="btnReset">
+                            <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" id="btnReset" style="transition: all 0.3s ease;">
                                 <i class="fas fa-redo me-1"></i>Reset Filter
                             </button>
                             <div id="activeFilters" class="mt-2"></div>
@@ -209,7 +226,7 @@
                     <div>
                         <div class="feature-card">
                             <h4>Total Korban Meninggal</h4>
-                            <h2 id="statMeninggal">60</h2>
+                            <h2 id="statMeninggal">0</h2>
                             <p>2018-2025</p>
                         </div>
                     </div>
@@ -218,7 +235,7 @@
                     <div>
                         <div class="feature-card">
                             <h4>Total Korban Luka</h4>
-                            <h2 id="statLuka">147</h2>
+                            <h2 id="statLuka">0</h2>
                             <p>2018-2025</p>
                         </div>
                     </div>
@@ -227,7 +244,7 @@
                     <div>
                         <div class="feature-card">
                             <h4>Total Pengungsi</h4>
-                            <h2 id="statPengungsi">56,400</h2>
+                            <h2 id="statPengungsi">0</h2>
                             <p>2018-2025</p>
                         </div>
                     </div>
@@ -241,317 +258,8 @@
     </footer>
 
     <script>
-        // Data lengkap
-        const allData = [{
-                id: 1,
-                gunung: "Gunung Merapi",
-                tanggal: "11 Maret 2023",
-                tahun: 2023,
-                lokasi: "Kab. Sleman, Magelang, Klaten",
-                provinsi: "Jawa Tengah",
-                meninggal: 2,
-                luka: 15,
-                pengungsi: 1250,
-                dampak: "45 rumah rusak",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 2,
-                gunung: "Gunung Semeru",
-                tanggal: "4 Desember 2022",
-                tahun: 2022,
-                lokasi: "Kab. Lumajang, Malang",
-                provinsi: "Jawa Timur",
-                meninggal: 57,
-                luka: 104,
-                pengungsi: 10250,
-                dampak: "5,205 rumah rusak",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 3,
-                gunung: "Gunung Sinabung",
-                tanggal: "10 Agustus 2020",
-                tahun: 2020,
-                lokasi: "Kab. Karo",
-                provinsi: "Sumatera Utara",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 1500,
-                dampak: "Lahan pertanian terdampak",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 4,
-                gunung: "Gunung Agung",
-                tanggal: "21 November 2019",
-                tahun: 2019,
-                lokasi: "Kab. Karangasem",
-                provinsi: "Bali",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 25000,
-                dampak: "Bandara ditutup sementara",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 5,
-                gunung: "Gunung Soputan",
-                tanggal: "3 Oktober 2018",
-                tahun: 2018,
-                lokasi: "Kab. Minahasa Tenggara",
-                provinsi: "Sulawesi Utara",
-                meninggal: 1,
-                luka: 0,
-                pengungsi: 2100,
-                dampak: "12 rumah rusak",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 6,
-                gunung: "Gunung Kerinci",
-                tanggal: "15 Mei 2024",
-                tahun: 2024,
-                lokasi: "Kab. Kerinci, Solok Selatan",
-                provinsi: "Jambi",
-                meninggal: 0,
-                luka: 3,
-                pengungsi: 800,
-                dampak: "Abu vulkanik radius 10km",
-                status: "Aktif",
-                prediksi: true
-            },
-            {
-                id: 7,
-                gunung: "Gunung Rinjani",
-                tanggal: "8 September 2024",
-                tahun: 2024,
-                lokasi: "Kab. Lombok Utara",
-                provinsi: "Nusa Tenggara Barat",
-                meninggal: 0,
-                luka: 8,
-                pengungsi: 3200,
-                dampak: "Lahan pertanian terdampak abu",
-                status: "Aktif",
-                prediksi: true
-            },
-            {
-                id: 8,
-                gunung: "Gunung Marapi",
-                tanggal: "22 Januari 2025",
-                tahun: 2025,
-                lokasi: "Kab. Agam, Tanah Datar",
-                provinsi: "Sumatera Barat",
-                meninggal: 0,
-                luka: 12,
-                pengungsi: 5500,
-                dampak: "50 rumah rusak ringan",
-                status: "Pemantauan",
-                prediksi: true
-            },
-            {
-                id: 9,
-                gunung: "Gunung Kelud",
-                tanggal: "14 Juli 2025",
-                tahun: 2025,
-                lokasi: "Kab. Kediri, Blitar",
-                provinsi: "Jawa Timur",
-                meninggal: 0,
-                luka: 5,
-                pengungsi: 7800,
-                dampak: "Infrastruktur jalan terdampak",
-                status: "Pemantauan",
-                prediksi: true
-            },
-            // Data tambahan untuk demo pagination
-            {
-                id: 10,
-                gunung: "Gunung Raung",
-                tanggal: "5 Juni 2021",
-                tahun: 2021,
-                lokasi: "Kab. Banyuwangi, Jember",
-                provinsi: "Jawa Timur",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 1200,
-                dampak: "Abu vulkanik",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 11,
-                gunung: "Gunung Slamet",
-                tanggal: "18 Agustus 2019",
-                tahun: 2019,
-                lokasi: "Kab. Banyumas, Tegal",
-                provinsi: "Jawa Tengah",
-                meninggal: 0,
-                luka: 2,
-                pengungsi: 800,
-                dampak: "Lahan pertanian terdampak",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 12,
-                gunung: "Gunung Bromo",
-                tanggal: "20 Januari 2021",
-                tahun: 2021,
-                lokasi: "Kab. Probolinggo, Malang",
-                provinsi: "Jawa Timur",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 1500,
-                dampak: "Wisata ditutup sementara",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 13,
-                gunung: "Gunung Tangkuban Parahu",
-                tanggal: "26 Juli 2019",
-                tahun: 2019,
-                lokasi: "Kab. Bandung Barat",
-                provinsi: "Jawa Barat",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 0,
-                dampak: "Kawasan wisata ditutup",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 14,
-                gunung: "Gunung Ijen",
-                tanggal: "3 Maret 2020",
-                tahun: 2020,
-                lokasi: "Kab. Banyuwangi",
-                provinsi: "Jawa Timur",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 0,
-                dampak: "Aktivitas meningkat",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 15,
-                gunung: "Gunung Dieng",
-                tanggal: "12 November 2021",
-                tahun: 2021,
-                lokasi: "Kab. Banjarnegara, Wonosobo",
-                provinsi: "Jawa Tengah",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 300,
-                dampak: "Gas beracun",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 16,
-                gunung: "Gunung Papandayan",
-                tanggal: "8 Mei 2022",
-                tahun: 2022,
-                lokasi: "Kab. Garut",
-                provinsi: "Jawa Barat",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 500,
-                dampak: "Aktivitas fumarol",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 17,
-                gunung: "Gunung Galunggung",
-                tanggal: "15 September 2020",
-                tahun: 2020,
-                lokasi: "Kab. Tasikmalaya",
-                provinsi: "Jawa Barat",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 400,
-                dampak: "Peningkatan aktivitas",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 18,
-                gunung: "Gunung Ciremai",
-                tanggal: "22 April 2021",
-                tahun: 2021,
-                lokasi: "Kab. Kuningan, Majalengka",
-                provinsi: "Jawa Barat",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 200,
-                dampak: "Aktivitas seismik",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 19,
-                gunung: "Gunung Lawu",
-                tanggal: "30 Oktober 2019",
-                tahun: 2019,
-                lokasi: "Kab. Karanganyar, Magetan",
-                provinsi: "Jawa Tengah",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 0,
-                dampak: "Peningkatan suhu",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 20,
-                gunung: "Gunung Muria",
-                tanggal: "7 Desember 2020",
-                tahun: 2020,
-                lokasi: "Kab. Kudus, Jepara",
-                provinsi: "Jawa Tengah",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 0,
-                dampak: "Aktivitas minor",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 21,
-                gunung: "Gunung Argopuro",
-                tanggal: "14 Maret 2022",
-                tahun: 2022,
-                lokasi: "Kab. Jember, Situbondo",
-                provinsi: "Jawa Timur",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 0,
-                dampak: "Aktivitas normal",
-                status: "Selesai",
-                prediksi: false
-            },
-            {
-                id: 22,
-                gunung: "Gunung Welirang",
-                tanggal: "9 Agustus 2021",
-                tahun: 2021,
-                lokasi: "Kab. Mojokerto, Pasuruan",
-                provinsi: "Jawa Timur",
-                meninggal: 0,
-                luka: 0,
-                pengungsi: 0,
-                dampak: "Emisi gas",
-                status: "Selesai",
-                prediksi: false
-            }
-        ];
+        // Data lengkap dari database
+        const allData = <?php echo json_encode($dataArray); ?>;
 
         // Konfigurasi pagination
         const itemsPerPage = 10;
@@ -739,8 +447,6 @@
             const nextLi = document.createElement('li');
             nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
             nextLi.innerHTML = `<a class="page-link" href="#" data-page="${currentPage + 1}">Selanjutnya</a>`;
-            pagination.appendChild(nextLi);
-
             // Add event listeners
             pagination.querySelectorAll('.page-link').forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -786,9 +492,9 @@
 
         // Update statistik
         function updateStatistics() {
-            const totalMeninggal = filteredData.reduce((sum, item) => sum + item.meninggal, 0);
-            const totalLuka = filteredData.reduce((sum, item) => sum + item.luka, 0);
-            const totalPengungsi = filteredData.reduce((sum, item) => sum + item.pengungsi, 0);
+            const totalMeninggal = filteredData.reduce((sum, item) => sum + parseInt(item.meninggal), 0);
+            const totalLuka = filteredData.reduce((sum, item) => sum + parseInt(item.luka), 0);
+            const totalPengungsi = filteredData.reduce((sum, item) => sum + parseInt(item.pengungsi), 0);
 
             document.getElementById('statMeninggal').textContent = totalMeninggal;
             document.getElementById('statLuka').textContent = totalLuka;
@@ -822,31 +528,49 @@
             };
         }
 
-        // Grafik (sama seperti sebelumnya)
+        // Grafik
         function createCharts() {
+            // Hitung data untuk grafik dari filteredData
+            const yearData = {};
+            filteredData.forEach(item => {
+                const year = item.tahun;
+                if (!yearData[year]) {
+                    yearData[year] = {
+                        meninggal: 0,
+                        luka: 0,
+                        pengungsi: 0
+                    };
+                }
+                yearData[year].meninggal += parseInt(item.meninggal);
+                yearData[year].luka += parseInt(item.luka);
+                yearData[year].pengungsi += parseInt(item.pengungsi);
+            });
+
+            const years = Object.keys(yearData).sort();
+            const meninggalData = years.map(year => yearData[year].meninggal);
+            const lukaData = years.map(year => yearData[year].luka);
+
             // Line Chart
             const lineCtx = document.getElementById('lineChart').getContext('2d');
             new Chart(lineCtx, {
                 type: 'line',
                 data: {
-                    labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024*', '2025*'],
+                    labels: years,
                     datasets: [{
                         label: 'Korban Meninggal',
-                        data: [1, 0, 0, 0, 57, 2, 0, 0],
+                        data: meninggalData,
                         borderColor: '#dc3545',
                         backgroundColor: 'rgba(220, 53, 69, 0.1)',
                         tension: 0.3,
                         fill: true,
-                        borderDash: [5, 5],
                         pointStyle: 'circle'
                     }, {
                         label: 'Korban Luka',
-                        data: [0, 0, 0, 0, 104, 15, 11, 17],
+                        data: lukaData,
                         borderColor: '#fd7e14',
                         backgroundColor: 'rgba(253, 126, 20, 0.1)',
                         tension: 0.3,
                         fill: true,
-                        borderDash: [5, 5],
                         pointStyle: 'circle'
                     }]
                 },
@@ -873,7 +597,7 @@
                         x: {
                             title: {
                                 display: true,
-                                text: 'Tahun (*Prediksi)'
+                                text: 'Tahun'
                             }
                         }
                     }
@@ -881,13 +605,17 @@
             });
 
             // Pie Chart
+            const totalMeninggal = filteredData.reduce((sum, item) => sum + parseInt(item.meninggal), 0);
+            const totalLuka = filteredData.reduce((sum, item) => sum + parseInt(item.luka), 0);
+            const totalPengungsi = filteredData.reduce((sum, item) => sum + parseInt(item.pengungsi), 0);
+
             const pieCtx = document.getElementById('pieChart').getContext('2d');
             new Chart(pieCtx, {
                 type: 'pie',
                 data: {
                     labels: ['Korban Meninggal', 'Korban Luka', 'Pengungsi'],
                     datasets: [{
-                        data: [60, 147, 56400],
+                        data: [totalMeninggal, totalLuka, totalPengungsi],
                         backgroundColor: ['#dc3545', '#fd7e14', '#0d6efd'],
                         borderWidth: 1
                     }]

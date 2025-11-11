@@ -143,13 +143,14 @@ body::before {
   border: none;
   color: #fff;
   font-weight: 600;
-  transition: 0.3s;
   box-shadow: 0 4px 12px rgba(127, 29, 29, 0.4);
+  transition: all 0.3s ease;
 }
 
 .btn-danger:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(127, 29, 29, 0.5);
+  transition: all 0.3s ease;
 }
 
 .filter-badge {
