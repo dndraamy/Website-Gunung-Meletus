@@ -15,9 +15,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $kerusakan = trim(htmlspecialchars($_POST["kerusakan"] ?? ""));
     $kebutuhan = trim(htmlspecialchars($_POST["kebutuhan"] ?? ""));
     $setuju = isset($_POST["setuju"]) ? true : false;
-    
-    $keparahan_selected = $keparahan; 
-    $foto_path = NULL; 
+
+    $keparahan_selected = $keparahan;
+    $foto_path = NULL;
 
     if (!$telepon || !$lokasi || !$setuju) {
         $message = '<div class="alert alert-danger mt-3">Nomor telepon, lokasi, dan persetujuan wajib diisi.</div>';
@@ -27,7 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!is_dir($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
-            
+
             $file_extension = pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION);
             $new_filename = uniqid() . "." . $file_extension;
             $target_file = $target_dir . $new_filename;
@@ -41,7 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $sql = "INSERT INTO laporan (nama_pelapor, telepon, lokasi, keparahan, kerusakan, kebutuhan, foto_path, waktu_lapor) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
-        
+
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("sssssss", $nama, $telepon, $lokasi, $keparahan, $kerusakan, $kebutuhan, $foto_path);
 
@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message = '<div class="alert alert-success mt-3">Terima kasih sudah melaporkan kondisi. Tim kami akan segera menindaklanjuti.</div>';
             $nama = $telepon = $lokasi = $kerusakan = $kebutuhan = "";
             $setuju = false;
-            $keparahan_selected = "Ringan"; 
+            $keparahan_selected = "Ringan";
         } else {
             $message = '<div class="alert alert-danger mt-3">Gagal menyimpan data laporan: ' . $stmt->error . '</div>';
         }
@@ -65,23 +65,23 @@ $result = $conn->query($sql_kontak);
 
 if ($result) {
     if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
+        while ($row = $result->fetch_assoc()) {
             $contacts[] = [
-                $row['instansi'], 
-                $row['deskripsi'], 
+                $row['instansi'],
+                $row['deskripsi'],
                 $row['nomor_telepon']
             ];
         }
     } else {
         $contacts = [
-             ["SAR / BASARNAS", "Pencarian & pertolongan", "115"],
-             ["Layanan Darurat Nasional", "Darurat umum 24 jam", "112"]
+            ["SAR / BASARNAS", "Pencarian & pertolongan", "115"],
+            ["Layanan Darurat Nasional", "Darurat umum 24 jam", "112"]
         ];
     }
 } else {
     $contacts = [
-         ["SAR / BASARNAS", "Pencarian & pertolongan", "115"],
-         ["Layanan Darurat Nasional", "Darurat umum 24 jam", "112"]
+        ["SAR / BASARNAS", "Pencarian & pertolongan", "115"],
+        ["Layanan Darurat Nasional", "Darurat umum 24 jam", "112"]
     ];
     $message .= '<div class="alert alert-warning mt-3">Gagal mengambil data kontak darurat dari database. Menggunakan data statis.</div>';
 }
@@ -95,13 +95,14 @@ $kebutuhan = htmlspecialchars($kebutuhan);
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kontak Darurat & Pelaporan</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="styles_css/page_kontak.css"> 
+    <link rel="stylesheet" href="styles_css/kontak.css">
 </head>
 
 <body style="background-color: black;">
@@ -111,20 +112,20 @@ $kebutuhan = htmlspecialchars($kebutuhan);
 
     <main class="content-wrapper">
         <section class="header-section text-center p-4 rounded-4 mb-5">
-            <h1 class="fw-bold display-6">Kontak Darurat & Pelaporan Cepat</h1>
-            <p class="lead mx-auto" style="max-width: 700px;">
-                Halaman ini menyediakan daftar kontak penting yang diambil dari database, serta fitur untuk melaporkan kondisi di lokasi Anda.
+            <h1 class="fw-bold display-6 text-white">Kontak Darurat & Pelaporan Cepat</h1>
+            <p class="lead mx-auto" style="max-width: 800px; color: white">
+                Halaman ini menyediakan daftar kontak penting terkait kebencanaan gunung berapi di Indonesia, serta fitur untuk melaporkan kondisi di lokasi Anda.
             </p>
             <div class="alert-warning-custom mt-4" role="alert">
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                **Gunakan dengan bijak.** Hubungi layanan darurat untuk kondisi gawat darurat.
+                Gunakan dengan bijak. Hubungi layanan darurat untuk kondisi gawat darurat.
             </div>
         </section>
 
         <section>
             <h2 class="section-title">Daftar Kontak Penting</h2>
-            <p class="section-subtitle">Data diambil langsung dari database `kontak_darurat`.</p>
-            
+            <p class="section-subtitle">Nomor darurat dan instansi terkait untuk respons cepat saat bencana.</p>
+
             <div class="contacts-grid">
                 <?php
                 foreach ($contacts as $c) {
@@ -135,12 +136,12 @@ $kebutuhan = htmlspecialchars($kebutuhan);
                                 <i class="bi bi-telephone-fill contact-icon"></i>
                             </div>
                             <div>
-                                <div class="fw-semibold">'.$c[0].'</div>
-                                <small class="text-secondary">'.$c[1].'</small>
+                                <div class="fw-semibold">' . $c[0] . '</div>
+                                <small class="text-secondary">' . $c[1] . '</small>
                             </div>
                         </div>
-                        <a href="tel:'.$c[2].'" class="btn-call">
-                            <i class="bi bi-telephone-outbound"></i> '.$c[2].'
+                        <a href="tel:' . $c[2] . '" class="btn-call">
+                            <i class="bi bi-telephone-outbound"></i> ' . $c[2] . '
                         </a>
                     </div>';
                 }
@@ -150,14 +151,11 @@ $kebutuhan = htmlspecialchars($kebutuhan);
 
         <section>
             <h2 class="section-title">Lapor Bencana (Pelaporan Cepat)</h2>
-            <p class="section-subtitle">Laporkan kondisi terkini di lokasi Anda untuk membantu petugas melakukan penanganan. Data akan disimpan ke database `laporan`.</p>
-            
-            <?= $message ?>
-
+            <p class="section-subtitle">Laporkan kondisi terkini di lokasi Anda untuk membantu petugas melakukan penanganan.</p>
             <form action="" method="POST" enctype="multipart/form-data" class="mt-4">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">Nama Pelapor (opsional)</label>
+                        <label class="form-label">Nama Pelapor</label>
                         <input type="text" name="nama" class="form-control" placeholder="Nama Anda" value="<?= $nama ?>">
                     </div>
                     <div class="col-md-6">
@@ -165,11 +163,11 @@ $kebutuhan = htmlspecialchars($kebutuhan);
                         <textarea name="kerusakan" class="form-control" placeholder="Contoh: Jalan tertutup abu, rumah retak, dsb."><?= $kerusakan ?></textarea>
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Nomor Telepon (wajib)</label>
+                        <label class="form-label">Nomor Telepon</label>
                         <input type="text" name="telepon" class="form-control" placeholder="0812xxxxxx" required value="<?= $telepon ?>">
                     </div>
                     <div class="col-md-6">
-                        <label class="form-label">Lokasi (Desa/Kecamatan) (wajib)</label>
+                        <label class="form-label">Lokasi (Desa/Kecamatan)</label>
                         <input type="text" name="lokasi" class="form-control" placeholder="Contoh: Desa Suka Maju, Kec. X" required value="<?= $lokasi ?>">
                     </div>
                     <div class="col-md-6">
@@ -212,4 +210,5 @@ $kebutuhan = htmlspecialchars($kebutuhan);
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

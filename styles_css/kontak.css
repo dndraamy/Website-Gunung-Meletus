@@ -1,0 +1,345 @@
+/* ==========================================
+   Color Palette Profesional - Dark Red Theme
+   ========================================== */
+:root {
+  --primary-red: #991b1b;
+  --primary-dark: #7f1d1d;
+  --secondary-red: #dc2626;
+  --accent-orange: #f97316;
+  --accent-amber: #d97706;
+  --bg-light: #f8fafc;
+  --bg-white: #ffffff;
+  --text-primary: #1e293b;
+  --text-secondary: #64748b;
+  --border-color: #e2e8f0;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* ==========================================
+   Background dengan Gunung
+   ========================================== */
+body {
+  background: linear-gradient(
+    135deg,
+    #7f1d1d 0%,
+    #991b1b 30%,
+    #b91c1c 60%,
+    #dc2626 100%
+  );
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+  color: var(--text-primary);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 400px;
+  background: linear-gradient(
+      to top,
+      rgba(59, 4, 4, 0.95) 0%,
+      rgba(0, 0, 0, 0.8) 100%
+    ),
+    /* SVG Gunung */
+      url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="mountain1" x1="0%25" y1="0%25" x2="0%25" y2="100%25"><stop offset="0%25" style="stop-color:%23450a0a;stop-opacity:1" /><stop offset="100%25" style="stop-color:%237f1d1d;stop-opacity:1" /></linearGradient><linearGradient id="mountain2" x1="0%25" y1="0%25" x2="0%25" y2="100%25"><stop offset="0%25" style="stop-color:%235c0f0f;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23991b1b;stop-opacity:1" /></linearGradient><linearGradient id="mountain3" x1="0%25" y1="0%25" x2="0%25" y2="100%25"><stop offset="0%25" style="stop-color:%23771414;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23b91c1c;stop-opacity:1" /></linearGradient></defs><polygon fill="url(%23mountain1)" points="0,400 0,250 150,400" opacity="0.9"/><polygon fill="url(%23mountain2)" points="100,400 250,120 400,400" opacity="0.85"/><polygon fill="url(%23mountain3)" points="350,400 480,180 610,400" opacity="0.8"/><polygon fill="url(%23mountain1)" points="550,400 720,100 890,400" opacity="0.9"/><polygon fill="url(%23mountain2)" points="820,400 950,160 1080,400" opacity="0.85"/><polygon fill="url(%23mountain3)" points="1000,400 1100,220 1200,400" opacity="0.8"/><polygon fill="%23fca5a5" points="250,120 240,140 250,135 260,140" opacity="0.4"/><polygon fill="%23fca5a5" points="720,100 710,125 720,118 730,125" opacity="0.5"/><polygon fill="%23fca5a5" points="480,180 472,200 480,193 488,200" opacity="0.3"/><circle cx="250" cy="125" r="3" fill="%23fbbf24" opacity="0.6"/><circle cx="720" cy="105" r="4" fill="%23fbbf24" opacity="0.7"/></svg>')
+      bottom center / cover no-repeat;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ==========================================
+   Content Wrapper
+   ========================================== */
+.content-wrapper {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ==========================================
+   Header Section
+   ========================================== */
+.card-header {
+  background-color: #3f3f46;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 10px 10px 0 0 !important;
+}
+
+.alert-warning-custom {
+  color: #ffffffff;
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 50%,
+    var(--secondary-red) 100%
+  );
+  border-radius: 15px;
+  padding: 0.5rem;
+  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
+  top: 70px;
+  margin-left: 220px;
+  width: 60%;
+  z-index: 9998;
+}
+
+.alert-warning-custom i {
+  font-size: 1.2rem;
+  animation: pulse 2s infinite;
+}
+
+/* ==========================================
+   Section Titles
+   ========================================== */
+.section-title {
+  color: var(--bg-white);
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.section-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* ==========================================
+   Contact Cards Grid
+   ========================================== */
+.contacts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.contact-card {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow-md);
+  transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--secondary-red);
+}
+
+.contact-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.contact-icon-wrapper {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--secondary-red) 100%
+  );
+  width: 50px;
+  height: 50px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(127, 29, 29, 0.4);
+}
+
+.contact-icon {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.btn-call {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--accent-orange) 100%
+  );
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(127, 29, 29, 0.4);
+}
+
+.btn-call:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(127, 29, 29, 0.5);
+  color: white;
+}
+
+/* ==========================================
+   Form Section
+   ========================================== */
+section form {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(248, 250, 252, 0.95) 100%
+  );
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: var(--shadow-lg);
+  margin-top: 2rem;
+}
+
+.form-label {
+  color: var(--text-primary);
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.form-control,
+.form-select {
+  border: 2px solid var(--border-color);
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+  background-color: var(--bg-white);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--secondary-red);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+  outline: none;
+}
+
+.form-check-input {
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 2px solid var(--border-color);
+  border-radius: 6px;
+}
+
+.form-check-input:checked {
+  background-color: var(--primary-red);
+  border-color: var(--primary-red);
+}
+
+.form-check-label {
+  color: var(--text-secondary);
+  margin-left: 0.5rem;
+}
+
+/* ==========================================
+   Buttons
+   ========================================== */
+.btn-danger {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--accent-orange) 100%
+  );
+  border: none;
+  box-shadow: 0 4px 12px rgba(127, 29, 29, 0.4);
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+}
+
+.btn-danger:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(127, 29, 29, 0.5);
+}
+
+/* ==========================================
+   Alerts
+   ========================================== */
+.alert {
+  border-radius: 12px;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-weight: 500;
+}
+
+.alert-success {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  color: #065f46;
+  border-left: 4px solid #10b981;
+}
+
+.alert-danger {
+  background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+  color: #991b1b;
+  border-left: 4px solid #dc2626;
+}
+
+/* ==========================================
+   Responsive Design
+   ========================================== */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: 1rem;
+  }
+
+  .contact-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .contact-left {
+    flex-direction: column;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .alert-warning-custom {
+    margin-left: 0px;
+    width: 100%;
+  }
+
+  section form {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .contacts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  body::before {
+    height: 200px;
+  }
+}
