@@ -6,52 +6,53 @@ $nama = $telepon = $lokasi = $keparahan = $kerusakan = $kebutuhan = "";
 $setuju = false;
 $keparahan_selected = "Ringan";
 
-// --- 1. PROSES PENGIRIMAN FORMULIR PELAPORAN ---
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// === PROSES FORM LAPORAN ===
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $nama = trim(htmlspecialchars($_POST["nama"] ?? ""));
     $telepon = trim(htmlspecialchars($_POST["telepon"] ?? ""));
     $lokasi = trim(htmlspecialchars($_POST["lokasi"] ?? ""));
     $keparahan = htmlspecialchars($_POST["keparahan"] ?? "Ringan");
     $kerusakan = trim(htmlspecialchars($_POST["kerusakan"] ?? ""));
     $kebutuhan = trim(htmlspecialchars($_POST["kebutuhan"] ?? ""));
-    $setuju = isset($_POST["setuju"]) ? true : false;
+    $setuju = isset($_POST["setuju"]);
 
+    $foto_path = null;
     $keparahan_selected = $keparahan;
-    $foto_path = NULL;
 
-    if (!$telepon || !$lokasi || !$setuju) {
+    // Validasi input wajib
+    if (empty($telepon) || empty($lokasi) || !$setuju) {
         $message = '<div class="alert alert-danger mt-3">Nomor telepon, lokasi, dan persetujuan wajib diisi.</div>';
     } else {
-        if (isset($_FILES["foto"]) && $_FILES["foto"]["error"] == 0) {
+        // Upload foto jika ada
+        if (!empty($_FILES["foto"]["name"])) {
             $target_dir = "uploads/";
-            if (!is_dir($target_dir)) {
-                mkdir($target_dir, 0777, true);
-            }
+            if (!is_dir($target_dir)) mkdir($target_dir, 0777, true);
+            
+            $ext = pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION);
+            $new_name = uniqid("laporan_") . "." . $ext;
+            $target_path = $target_dir . $new_name;
 
-            $file_extension = pathinfo($_FILES["foto"]["name"], PATHINFO_EXTENSION);
-            $new_filename = uniqid() . "." . $file_extension;
-            $target_file = $target_dir . $new_filename;
-
-            if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_file)) {
-                $foto_path = $target_file;
+            if (move_uploaded_file($_FILES["foto"]["tmp_name"], $target_path)) {
+                $foto_path = $target_path;
             } else {
-                $message .= '<div class="alert alert-warning mt-3">Gagal mengunggah foto.</div>';
+                $message = '<div class="alert alert-warning mt-3">Gagal mengunggah foto.</div>';
             }
         }
 
-        $sql = "INSERT INTO laporan (nama_pelapor, telepon, lokasi, keparahan, kerusakan, kebutuhan, foto_path, waktu_lapor) 
-                VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
-
-        $stmt = $conn->prepare($sql);
+        // Simpan ke database
+        $stmt = $conn->prepare("
+            INSERT INTO laporan (nama_pelapor, telepon, lokasi, keparahan, kerusakan, kebutuhan, foto_path, waktu_lapor)
+            VALUES (?, ?, ?, ?, ?, ?, ?, NOW())
+        ");
         $stmt->bind_param("sssssss", $nama, $telepon, $lokasi, $keparahan, $kerusakan, $kebutuhan, $foto_path);
 
         if ($stmt->execute()) {
-            $message = '<div class="alert alert-success mt-3">Terima kasih sudah melaporkan kondisi. Tim kami akan segera menindaklanjuti.</div>';
+            $message = '<div class="alert alert-success mt-3">✅ Terima kasih, laporan Anda telah dikirim.</div>';
             $nama = $telepon = $lokasi = $kerusakan = $kebutuhan = "";
             $setuju = false;
             $keparahan_selected = "Ringan";
         } else {
-            $message = '<div class="alert alert-danger mt-3">Gagal menyimpan data laporan: ' . $stmt->error . '</div>';
+            $message = '<div class="alert alert-danger mt-3">Gagal menyimpan laporan: ' . $stmt->error . '</div>';
         }
         $stmt->close();
     }
@@ -200,6 +201,7 @@ $kebutuhan = htmlspecialchars($kebutuhan);
                 </div>
 
                 <button class="btn btn-danger rounded-4 px-4 py-2 fw-semibold" type="submit">Kirim Laporan</button>
+                <?= $message ?>
             </form>
         </section>
     </main>

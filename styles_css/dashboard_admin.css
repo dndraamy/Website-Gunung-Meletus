@@ -1,0 +1,263 @@
+:root {
+  --bg: #f8fafc;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --accent: #000000ff;
+  --border: #e2e8f0;
+  --white: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text-dark);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 250px;
+  background: var(--white);
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+}
+
+.sidebar h2 {
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 25px;
+}
+
+.sidebar a {
+  display: flex;
+  align-items: center;
+  padding: 12px 20px;
+  color: var(--text-light);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.sidebar a i {
+  margin-right: 12px;
+  color: var(--accent);
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar a:hover,
+.sidebar a.active {
+  background: #e0e0e0ff;
+  border-left: 4px solid var(--accent);
+  color: var(--text-dark);
+}
+
+/* Main */
+.main {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+p#currentDateTime {
+  color: var(--text-light);
+  margin-bottom: 25px;
+}
+
+/* Cards */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: var(--white);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+.card h3 {
+  color: var(--accent);
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.card p {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dark);
+}
+
+/* Ringkasan */
+.dashboard-summary {
+  margin-top: 30px;
+  background: #fff;
+  border-left: 5px solid var(--accent);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.dashboard-summary h2 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.dashboard-summary ul {
+  list-style: none;
+}
+
+.dashboard-summary li {
+  margin-bottom: 10px;
+  color: var(--text-dark);
+}
+
+.dashboard-summary i {
+  color: var(--accent);
+  margin-right: 8px;
+}
+
+/* Table */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: var(--white);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+th,
+td {
+  padding: 12px 15px;
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+}
+
+th {
+  background: #f1f5f9;
+  color: var(--text-dark);
+  font-weight: 600;
+}
+
+td img {
+  border-radius: 5px;
+}
+
+td button,
+td a {
+  border: none;
+  background: none;
+  color: var(--accent);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+td button:hover,
+td a:hover {
+  color: #ffffffff;
+}
+
+/* Input & Button */
+form input[type="text"],
+form select,
+textarea {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-right: 8px;
+  font-size: 14px;
+  background: #f8fafc;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  height: 100px;
+}
+
+button.save {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+button.save:hover {
+  background: #991b1b;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Topbar */
+.topbar {
+  padding-top: 350px;
+  padding-left: 65px;
+}
+
+/* Tombol Logout */
+.logout-btn {
+  background: var(--primary-red);
+  color: var(--text-light);
+  border: none;
+  border-radius: var(--radius);
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition);
+}
+
+.logout-btn i {
+  font-size: 20px;
+}
+
+.logout-btn:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
