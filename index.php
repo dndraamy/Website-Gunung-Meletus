@@ -1,3 +1,10 @@
+<?php
+include 'koneksi.php';
+$query = $conn->query("SELECT isi_pesan FROM peringatan ORDER BY id DESC LIMIT 1");
+$row = $query->fetch_assoc();
+$pesan = $row ? $row['isi_pesan'] : 'Belum ada peringatan saat ini.';
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -11,10 +18,10 @@
 <body style="background-color: black;">
 
     <!-- Alert Banner untuk status penting -->
-    <div class="alert-banner warning">
-        <i class="fas fa-exclamation-triangle"></i> 
-        PERINGATAN: Gunung Anak Krakatau dalam Status Siaga. Masyarakat dihimbau tidak beraktivitas dalam radius 5 km dari kawah.
-    </div>
+<div class="alert-banner warning">
+  <i class="fas fa-exclamation-triangle"></i> 
+  <?= htmlspecialchars($pesan) ?>
+</div>
     
     <!-- Header -->
     <header>
