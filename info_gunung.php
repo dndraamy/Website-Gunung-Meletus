@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles_css/info_gunung.css">
+    <link rel="stylesheet" href="styles_css/informasi_gunung.css">
 </head>
 
 <body style="background-color: black;">
@@ -48,7 +48,6 @@
 
                     <!-- Results Grid -->
                     <div class="search-results-grid" id="resultsGrid">
-                        <!-- Results will be populated here by JavaScript -->
                     </div>
 
                     <div class="no-results" id="noResults" style="display: none;">
@@ -67,8 +66,21 @@
         <div class="volcano-grid-container">
             <div class="volcano-grid" id="volcanoGrid">
                 <?php
-                $result = mysqli_query($conn, "SELECT * FROM gunung");
+                // --- Pagination setup ---
+                $limit = 9;
+                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+                $offset = ($page - 1) * $limit;
+
+                // Hitung total data
+                $total_result = mysqli_query($conn, "SELECT COUNT(*) AS total FROM data_gunung");
+                $total_row = mysqli_fetch_assoc($total_result);
+                $total_data = $total_row['total'];
+                $total_pages = ceil($total_data / $limit);
+
+                // Ambil data sesuai halaman aktif
+                $result = mysqli_query($conn, "SELECT * FROM data_gunung LIMIT $limit OFFSET $offset");
                 $allVolcanoes = [];
+
                 while ($row = mysqli_fetch_assoc($result)) {
                     $status_class = 'tag-normal';
                     $status_icon = 'fas fa-check-circle';
@@ -140,6 +152,25 @@
                     </div>
                 <?php } ?>
             </div>
+            <!-- Pagination -->
+            <div class="pagination-container">
+                <?php if ($page > 1): ?>
+                    <a href="?page=<?php echo $page - 1; ?>" class="pagination-btn prev">
+                        <i class="fas fa-chevron-left"></i> Sebelumnya
+                    </a>
+                <?php endif; ?>
+
+                <span class="pagination-info">
+                    Halaman <?php echo $page; ?> dari <?php echo $total_pages; ?>
+                </span>
+
+                <?php if ($page < $total_pages): ?>
+                    <a href="?page=<?php echo $page + 1; ?>" class="pagination-btn next">
+                        Selanjutnya <i class="fas fa-chevron-right"></i>
+                    </a>
+                <?php endif; ?>
+            </div>
+
         </div>
         </div>
         </section>
