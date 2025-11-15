@@ -218,6 +218,10 @@ if ($awas_count > 0) {
         <?php include 'footer.html' ?>
     </footer>
 
+    <a href="login.php" class="admin-panel-btn" aria-label="Akses Panel Administrator">
+        <i class="fas fa-user-shield"></i> Admin Panel
+    </a>
+
     <script>
         const staticCarousel = document.getElementById('static-carousel');
         const staticItems = staticCarousel.querySelectorAll('.carousel-static-item');

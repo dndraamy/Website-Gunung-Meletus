@@ -473,3 +473,40 @@ body::before {
     grid-template-columns: 1fr;
   }
 }
+
+/* --- ADMIN PANEL BUTTON --- */
+.admin-panel-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    
+    /* Styling Visual */
+    background: var(--primary-dark);
+    color: white;
+    padding: 12px 18px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.admin-panel-btn:hover {
+    color: black;
+    background: white;
+    transform: scale(1.05);
+}
+
+@media (max-width: 500px) {
+    .admin-panel-btn {
+        bottom: 15px;
+        right: 15px;
+        padding: 10px 15px;
+        font-size: 0.85rem;
+    }
+}
