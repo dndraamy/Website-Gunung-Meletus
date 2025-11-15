@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Nov 2025 pada 19.15
+-- Waktu pembuatan: 15 Nov 2025 pada 19.52
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.2.12
 
@@ -20,6 +20,26 @@ SET time_zone = "+00:00";
 --
 -- Database: `gunung_meletus`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `admin_users`
+--
+
+CREATE TABLE `admin_users` (
+  `id` int(11) UNSIGNED NOT NULL,
+  `nama` varchar(100) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `admin_users`
+--
+
+INSERT INTO `admin_users` (`id`, `nama`, `email`, `password`) VALUES
+(1, 'Admin 1', 'admin1@gmail.com', '123');
 
 -- --------------------------------------------------------
 
@@ -52,7 +72,7 @@ CREATE TABLE `data_gunung` (
 --
 
 INSERT INTO `data_gunung` (`id`, `nama_gunung`, `lokasi`, `ketinggian`, `sejarah`, `geologi`, `status`, `rekomendasi`, `gambar`, `tipe_gunung`, `bentuk_gunung`, `letusan_terakhir`, `suhu_magma`, `tipe_batuan`, `mineral_dominan`, `created_at`, `update_at`) VALUES
-(1, 'Gunung Merapi', 'Jawa Tengah & Yogyakarta', 2930, 'Gunung Merapi merupakan gunung api teraktif di Indonesia dengan sejarah letusan yang panjang. Letusan pertama tercatat pada tahun 1600 dan sejak itu terus menunjukkan aktivitas vulkanik yang signifikan.\n\nMerapi memiliki siklus erupsi setiap 2-5 tahun dengan erupsi besar setiap 10-15 tahun. Letusan besar terakhir terjadi pada tahun 2010 yang mengakibatkan dampak signifikan pada wilayah sekitarnya.', 'Merapi merupakan gunung api tipe stratovolcano dengan komposisi batuan andesit-basaltik. Struktur gunung ini ditandai dengan kubah lava yang terus tumbuh dan runtuh secara berkala.\n\nKarakteristik geologi Merapi termasuk:\n• Tipe magma andesitik-basaltik\n• Sistem plumbing yang kompleks\n• Pertumbuhan kubah lava yang cepat\n• Aliran piroklastik yang dominan', 'Siaga', 'Masyarakat dihimbau untuk tidak beraktivitas dalam radius 3 km dari puncak Merapi.\n\nLangkah mitigasi yang harus dilakukan:\n1. Selalu pantau informasi terbaru dari PVMBG\n2. Siapkan masker untuk melindungi dari abu vulkanik\n3. Ketahui jalur evakuasi terdekat\n4. Siapkan tas siaga bencana\n5. Ikuti arahan dari pihak berwenang', 'merapi.jpg', 'Aktif', 'Stratovolcano', '2023', '800-1200°C', 'Andesit-Basalt', '0', '2025-11-11 18:12:32', '2025-11-12 17:23:13'),
+(1, 'Gunung Merapi', 'Jawa Tengah & Yogyakarta', 2930, 'Gunung Merapi merupakan gunung api teraktif di Indonesia dengan sejarah letusan yang panjang. Letusan pertama tercatat pada tahun 1600 dan sejak itu terus menunjukkan aktivitas vulkanik yang signifikan.\n\nMerapi memiliki siklus erupsi setiap 2-5 tahun dengan erupsi besar setiap 10-15 tahun. Letusan besar terakhir terjadi pada tahun 2010 yang mengakibatkan dampak signifikan pada wilayah sekitarnya.', 'Merapi merupakan gunung api tipe stratovolcano dengan komposisi batuan andesit-basaltik. Struktur gunung ini ditandai dengan kubah lava yang terus tumbuh dan runtuh secara berkala.\n\nKarakteristik geologi Merapi termasuk:\n• Tipe magma andesitik-basaltik\n• Sistem plumbing yang kompleks\n• Pertumbuhan kubah lava yang cepat\n• Aliran piroklastik yang dominan', 'Siaga', 'Masyarakat dihimbau untuk tidak beraktivitas dalam radius 3 km dari puncak Merapi.\n\nLangkah mitigasi yang harus dilakukan:\n1. Selalu pantau informasi terbaru dari PVMBG\n2. Siapkan masker untuk melindungi dari abu vulkanik\n3. Ketahui jalur evakuasi terdekat\n4. Siapkan tas siaga bencana\n5. Ikuti arahan dari pihak berwenang', 'merapi.jpg', 'Aktif', 'Stratovolcano', '2023', '800-1200°C', 'Andesit-Basalt', '0', '2025-11-11 18:12:32', '2025-11-15 18:47:36'),
 (2, 'Gunung Semeru', 'Jawa Timur', 3676, 'Gunung Semeru merupakan gunung tertinggi di Pulau Jawa dan sering mengalami erupsi kecil setiap tahun.', 'Stratovulkan aktif yang terbentuk dari aktivitas vulkanik berulang.', 'Waspada', 'Masyarakat diminta tidak beraktivitas dalam radius 1 km dari kawah Jonggring Saloka.', 'semeru.jpg', '', '', '', '', '', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
 (3, 'Gunung Bromo', 'Jawa Timur', 2329, 'Gunung Bromo merupakan bagian dari Taman Nasional Bromo Tengger Semeru. Gunung ini memiliki kawah yang aktif dengan aktivitas letusan kecil yang terjadi secara berkala.\n\nBromo dianggap suci oleh masyarakat Tengger dan menjadi lokasi upacara Kasada setiap tahunnya.', 'Bromo adalah gunung api maar yang terletak dalam kaldera Tengger. Karakteristik geologinya unik dengan kawah yang aktif mengeluarkan asap belerang secara terus menerus.\n\nFitur geologi utama:\n• Kaldera Tengger selebar 10 km\n• Kawah aktif dengan diameter 800 m\n• Material vulkanik andesitik\n• Sistem hydrothermal yang aktif', 'Normal', 'Pengunjung diperbolehkan hingga bibir kawah dengan tetap memperhatikan kondisi cuaca dan aktivitas vulkanik.\n\nPeringatan keselamatan:\n• Gunakan masker di sekitar kawah\n• Hindari angin yang membawa gas beracun\n• Ikuti jalur yang ditentukan\n• Perhatikan kondisi cuaca', 'bromo.jpg', 'Aktif', 'Stratovolcano', '2021', '600-800°C', 'Andesit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
 (4, 'Gunung Sinabung', 'Sumatera Utara', 2460, 'Gunung Sinabung mengalami kebangkitan aktivitas vulkanik setelah 400 tahun tertidur. Letusan pertama dalam era modern terjadi pada tahun 2010 dan sejak itu menunjukkan aktivitas yang intensif.\n\nGunung ini telah menyebabkan pengungsian besar-besaran penduduk di sekitarnya.', 'Sinabung adalah stratovolcano andesitik-dasitik dengan sejarah letusan eksplosif. Gunung ini memiliki karakteristik:\n• Kubah lava yang tumbuh cepat\n• Letusan eksplosif dengan kolom abu tinggi\n• Aliran piroklastik yang ekstensif\n• Lava kental dengan kandungan silika tinggi', 'Waspada', 'Zona bahaya diperluas hingga radius 5 km dari puncak. Masyarakat di zona merah harus mengungsi dan tidak diperbolehkan beraktivitas.\n\nKewaspadaan:\n• Siap siaga untuk evakuasi\n• Pantau perkembangan aktivitas\n• Hindari lembah dan daerah aliran lahar', 'sinabung.jpg', 'Aktif', 'Stratovolcano', '2022', '700-900°C', 'Dasit-Andesit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
@@ -67,7 +87,7 @@ INSERT INTO `data_gunung` (`id`, `nama_gunung`, `lokasi`, `ketinggian`, `sejarah
 (13, 'Gunung Gamalama', 'Ternate, Maluku Utara', 1715, 'Gunung Gamalama merupakan gunung api pulau yang membentuk Pulau Ternate. Memiliki sejarah letusan yang panjang sejak abad ke-16.', 'Gamalama adalah stratovolcano basaltik-andesitik dengan letusan eksplosif dan efusif. Sering menghasilkan aliran lava.', 'Waspada', 'Masyarakat pulau harus siap dengan rencana evakuasi. Pantau informasi dari pos pengamatan.', 'gamalama.jpg', 'Aktif', 'Stratovolcano', '2018', '800-1100°C', 'Basalt-Andesit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
 (14, 'Gunung Papandayan', 'Jawa Barat', 2665, 'Gunung Papandayan dikenal dengan kawah mati dan kawah aktifnya yang mengeluarkan gas belerang. Letusan besar tahun 1772 menghancurkan 40 desa.', 'Papandayan adalah kompleks vulkanik dengan beberapa kawah aktif. Dominan aktivitas fumarolik dengan suhu tinggi.', 'Waspada', 'Hati-hati dengan lubang gas beracun. Selalu ikuti jalur yang ditentukan.', 'papandayan.jpg', 'Aktif', 'Stratovolcano', '2002', '300-800°C', 'Dasit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
 (15, 'Gunung Tambora', 'Sumbawa, NTB', 2850, 'Gunung Tambora terkenal dengan letusan super pada tahun 1815 yang merupakan letusan terbesar dalam sejarah modern. Letusan ini mengubah iklim global dan menciptakan kaldera raksasa.', 'Tambora adalah stratovolcano dengan kaldera besar selebar 6 km. Pasca letusan 1815, terbentuk kerucut baru (Doro Api Toi) di dalam kaldera.', 'Normal', 'Kunjungan ke kaldera diperbolehkan dengan pengawasan. Waspada terhadap gas beracun di dasar kaldera.', 'tambora.jpg', 'Aktif', 'Stratovolcano', '1967', '700-1000°C', 'Dasit-Riolit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
-(16, 'Gunung Krakatau', 'Selat Sunda', 813, 'Anak Krakatau tumbuh dari kaldera letusan super Krakatau 1883. Letusan 2018 menyebabkan tsunami dan mengubah bentuk gunung secara dramatis.', 'Anak Krakatau adalah gunung api strato yang sangat aktif, tumbuh dari kaldera Krakatau. Sering mengalami letusan strombolian dan pembentukan kubah lava.', 'Siaga', 'Tidak boleh mendekat dalam radius 5 km. Waspada tsunami vulkanik di pesisir Selat Sunda.', 'krakatau.jpg', 'Aktif', 'Kaldera', '2022', '800-1100°C', 'Andesit-Basalt', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
+(16, 'Gunung Krakatau', 'Selat Sunda', 813, 'Anak Krakatau tumbuh dari kaldera letusan super Krakatau 1883. Letusan 2018 menyebabkan tsunami dan mengubah bentuk gunung secara dramatis.', 'Anak Krakatau adalah gunung api strato yang sangat aktif, tumbuh dari kaldera Krakatau. Sering mengalami letusan strombolian dan pembentukan kubah lava.', 'Awas', 'Tidak boleh mendekat dalam radius 5 km. Waspada tsunami vulkanik di pesisir Selat Sunda.', 'krakatau.jpg', 'Aktif', 'Kaldera', '2022', '800-1100°C', 'Andesit-Basalt', '0', '2025-11-11 18:12:32', '2025-11-15 18:50:48'),
 (17, 'Gunung Batur', 'Bali', 1717, 'Gunung Batur terletak dalam kaldera ganda yang spektakuler. Memiliki sejarah letusan yang panjang dengan kaldera terbentuk sekitar 29.000 tahun lalu.', 'Batur adalah gunung api kompleks dalam kaldera. Memiliki beberapa kerucut parasit dan kawah aktif yang sering meletus.', 'Waspada', 'Pendakian diperbolehkan dengan pemandu. Hindari kawah saat aktivitas meningkat.', 'batur.jpg', 'Aktif', 'Kaldera', '2000', '600-900°C', 'Basalt', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
 (18, 'Gunung Sumbing', 'Jawa Tengah', 3370, 'Gunung Sumbing merupakan gunung api aktif yang memiliki kawah ganda. Aktivitas terakhir berupa emisi fumarol dan solfatara.', 'Sumbing adalah stratovolcano andesitik dengan kawah kompleks. Memiliki aktivitas fumarolik di kawah utama.', 'Normal', 'Status normal, pendakian diperbolehkan dengan tetap waspada terhadap gas beracun.', 'sumbing.jpg', 'Aktif', 'Stratovolcano', '1730', '500-800°C', 'Andesit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
 (19, 'Gunung Sundoro', 'Jawa Tengah', 3136, 'Gunung Sundoro memiliki kawah yang masih aktif dengan fumarol dan solfatara. Letusan terakhir terjadi pada abad ke-19.', 'Sundoro adalah stratovolcano andesitik dengan kawah yang dalam. Aktivitas terkini berupa emisi gas lemah.', 'Normal', 'Pendakian aman dengan tetap menjaga jarak dari kawah aktif.', 'sundoro.jpg', 'Aktif', 'Stratovolcano', '1903', '400-700°C', 'Andesit', '0', '2025-11-11 18:12:32', '2025-11-11 18:12:32'),
@@ -115,7 +135,7 @@ INSERT INTO `data_gunung` (`id`, `nama_gunung`, `lokasi`, `ketinggian`, `sejarah
 (107, 'Gunung Dukono', 'Halmahera Utara', 1229, 'Emisi abu terus menerus', NULL, 'Siaga', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-11-11 18:15:30', '2025-11-11 18:15:30'),
 (108, 'Gunung Ibu', 'Halmahera Barat', 1325, 'Awan panas guguran', NULL, 'Siaga', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-11-11 18:15:30', '2025-11-11 18:15:30'),
 (109, 'Gunung Arfak', 'Manokwari', 2955, 'Aktivitas normal', NULL, 'Normal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-11-11 18:15:30', '2025-11-11 18:15:30'),
-(110, 'Puncak Jaya (Carstensz)', 'Mimika', 4884, 'Aktivitas normal', NULL, 'Normal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-11-11 18:15:30', '2025-11-12 17:05:39');
+(110, 'Puncak Jaya (Carstensz)', 'Mimika', 4884, 'Aktivitas normal', NULL, 'Normal', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-11-11 18:15:30', '2025-11-15 18:18:06');
 
 -- --------------------------------------------------------
 
@@ -500,9 +520,9 @@ CREATE TABLE `laporan` (
 --
 
 INSERT INTO `laporan` (`id`, `nama_pelapor`, `telepon`, `lokasi`, `keparahan`, `kerusakan`, `kebutuhan`, `foto_path`, `waktu_lapor`, `status`) VALUES
-(1, 'Budi Santoso', '081234567890', 'Desa Lereng Agung, Kec. Karangasem', 'Berat', 'Atap rumah hancur sebagian, listrik terputus.', 'Air mineral, Masker N95', '', '2025-11-09 11:34:04', 'Terkonfirmasi'),
-(2, 'Citra Dewi', '087711223344', 'Dusun Sukamaju, Kec. Klungkung', 'Sedang', 'Jalan tertutup abu setebal 5 cm, jarak pandang rendah.', 'Masker, Kacamata Pelindung', '', '2025-11-09 11:34:04', 'Belum Dikonfirmasi'),
-(3, 'Joko Susilo', '089955544333', 'Kota Pinggiran', 'Ringan', 'Getaran terasa ringan, tidak ada kerusakan fisik.', 'Informasi resmi', '', '2025-11-09 11:34:04', 'Belum Dikonfirmasi');
+(1, 'Citra Mahadewi', '081234567890', 'Desa Lereng Agung, Kec. Karangasem', 'Berat', 'Atap rumah hancur sebagian, listrik terputus.', 'Air mineral, Masker N95', '', '2025-11-09 11:34:04', 'Terkonfirmasi'),
+(2, 'Andika Saputra', '087711223344', 'Dusun Sukamaju, Kec. Klungkung', 'Sedang', 'Jalan tertutup abu setebal 5 cm, jarak pandang rendah.', 'Masker, Kacamata Pelindung', '', '2025-11-09 11:34:04', 'Belum Dikonfirmasi'),
+(3, 'Chris Evans', '089955544333', 'Kota Baru', 'Ringan', 'Getaran terasa ringan, tidak ada kerusakan fisik.', 'Informasi resmi', '', '2025-11-09 11:34:04', 'Belum Dikonfirmasi');
 
 -- --------------------------------------------------------
 
@@ -521,7 +541,7 @@ CREATE TABLE `peringatan` (
 --
 
 INSERT INTO `peringatan` (`id`, `isi_pesan`, `tanggal_update`) VALUES
-(1, 'PERINGATAN: Gunung Anak Krakatau dalam Status Siaga. Masyarakat dihimbau tidak beraktivitas dalam radius 5 km dari kawah.', '2025-11-12 16:57:46');
+(1, 'PERINGATAN: Sistem memuat data Status Gunung Api. Selalu waspada dan ikuti arahan resmi.', '2025-11-15 18:06:48');
 
 -- --------------------------------------------------------
 
@@ -652,6 +672,13 @@ INSERT INTO `riwayat_aktivitas` (`id`, `gunung_id`, `periode`, `judul`, `deskrip
 --
 
 --
+-- Indeks untuk tabel `admin_users`
+--
+ALTER TABLE `admin_users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
 -- Indeks untuk tabel `data_gunung`
 --
 ALTER TABLE `data_gunung`
@@ -703,6 +730,12 @@ ALTER TABLE `riwayat_aktivitas`
 --
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
+
+--
+-- AUTO_INCREMENT untuk tabel `admin_users`
+--
+ALTER TABLE `admin_users`
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_gunung`
