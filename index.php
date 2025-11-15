@@ -74,7 +74,7 @@ if ($awas_count > 0) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistem Informasi Gunung Api - PVMBG</title>
+    <title>LavaLink</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link rel="stylesheet" href="styles_css/indexx.css" />
@@ -97,7 +97,7 @@ if ($awas_count > 0) {
     <section class="hero">
         <div class="container">
             <h2 style="padding-top: 100px;">Portal Pemantauan Gunung Api</h2>
-            <p>Portal yang menyediakan informasi aktivitas gunung api di Indonesia lengkap dengan status, data pemantauan, dan panduan kesiapsiagaan bencana.</p>
+            <p>Sistem informasi terpadu untuk memantau status terkini gunung api di Indonesia, peta kawasan rawan bencana, dan informasi evakuasi.</p>
             <div class="hero-stats">
                 <div class="stat-box">
                     <span class="stat-number"><?= $total_gunung ?></span>
@@ -161,31 +161,34 @@ if ($awas_count > 0) {
             </div>
         </section>
 
-        <!-- Status Section -->
         <section class="status-section">
-            <h2 class="section-title">Status Terkini Gunung Api</h2>
-            <div class="status-cards">
-                <?php foreach ($gunung_awas as $gunung): ?>
-                    <div class="status-card <?php echo strtolower($gunung['status']); ?> <?php echo (strpos($gunung['nama_gunung'], 'Krakatau') !== false) ? 'highlight' : ''; ?>">
-                        <div class="status-header">
-                            <h3><?php echo htmlspecialchars($gunung['nama_gunung']); ?></h3>
-                            <span class="status-level level-<?php echo strtolower($gunung['status']); ?>">
-                                <?php echo $gunung['status']; ?>
-                            </span>
-                        </div>
-                        <div class="status-details">
-                            <p><strong>Lokasi:</strong> <?php echo htmlspecialchars($gunung['lokasi']); ?></p>
-                            <p><strong>Ketinggian:</strong> <?php echo number_format($gunung['ketinggian'], 0); ?> mdpl</p>
-                            <?php if (strpos($gunung['nama_gunung'], 'Krakatau') !== false): ?>
+            <h2 class="section-title">Status Darurat Vulkanik</h2>
+            <?php if ($awas_count > 0): ?>
+                <div class="status-cards">
+                    <?php foreach ($gunung_awas as $gunung): ?>
+                        <div class="status-card <?php echo strtolower($gunung['status']); ?> highlight">
+                            <div class="status-header">
+                                <h3><?php echo htmlspecialchars($gunung['nama_gunung']); ?></h3>
+                                <span class="status-level level-<?php echo strtolower($gunung['status']); ?>">
+                                    <?php echo $gunung['status']; ?>
+                                </span>
+                            </div>
+                            <div class="status-details">
+                                <p><strong>Lokasi:</strong> <?php echo htmlspecialchars($gunung['lokasi']); ?></p>
+                                <p><strong>Ketinggian:</strong> <?php echo number_format($gunung['ketinggian'], 0); ?> mdpl</p>
                                 <div class="warning-note">
                                     <strong><i class="fas fa-exclamation-triangle"></i> Peringatan Khusus:</strong>
                                     Aktivitas vulkanik meningkat. Masyarakat dihimbau tidak beraktivitas dalam radius 5 km dari kawah.
                                 </div>
-                            <?php endif; ?>
+                            </div>
                         </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php else: ?>
+                <div class="no-alert-message">
+                    <p style="color: #c4c4c4ff;"><i>Seluruh gunung api yang dipantau berada pada tingkat aktivitas di bawah Level IV (Awas). Situasi umum dalam keadaan terkendali.</i></p>
+                </div>
+            <?php endif; ?>
         </section>
 
         <section class="carousel-section">
@@ -266,4 +269,5 @@ if ($awas_count > 0) {
         });
     </script>
 </body>
+
 </html>
