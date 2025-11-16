@@ -1,17 +1,56 @@
 <?php
 include 'koneksi.php';
 
-$sql = "SELECT id, gunung, tanggal, tahun, lokasi, provinsi, meninggal, luka, pengungsi, dampak, status, prediksi, ketinggian, status_gunung FROM gunung_api ORDER BY tahun DESC, tanggal DESC";
-$result = $conn->query($sql);
-
+$conn_status = false;
 $dataArray = [];
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        $dataArray[] = $row;
-    }
-}
+$error_message = "";
 
-$conn->close();
+if (!isset($conn) || $conn->connect_error) {
+    $error_message = "Koneksi database gagal dimuat. Pastikan 'koneksi.php' sudah benar.";
+} else {
+    $conn_status = true;
+    
+    $sql_query = "
+        SELECT 
+            dk.nama_gunung AS gunung,
+            dk.provinsi AS provinsi,
+            dk.tanggal,
+            dk.tahun,
+            dk.meninggal,
+            dk.luka,
+            dk.pengungsi,
+            dk.dampak,
+            dk.prediksi,
+            dg.status AS status
+        FROM 
+            data_korban dk
+        JOIN 
+            data_gunung dg ON dk.nama_gunung = dg.nama_gunung
+        WHERE 
+            dk.tahun >= 2018 AND dk.tahun <= 2025  -- BARIS PERBAIKAN: Memastikan hanya tahun 2018-2025
+        ORDER BY 
+            dk.tahun DESC, 
+            dk.meninggal DESC
+    ";
+
+    $result = $conn->query($sql_query);
+
+    if ($result) {
+        while($row = $result->fetch_assoc()) {
+            $row['tahun'] = (int)$row['tahun'];
+            $row['meninggal'] = (int)$row['meninggal'];
+            $row['luka'] = (int)$row['luka'];
+            $row['pengungsi'] = (int)$row['pengungsi'];
+            $row['prediksi'] = (int)$row['prediksi'];
+            
+            $dataArray[] = $row;
+        }
+        $result->free();
+    } else {
+        $error_message = "Error saat menjalankan kueri SQL: " . $conn->error;
+    }
+    $conn->close();
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +73,9 @@ $conn->close();
 
     <main class="content-wrapper">
         <section class="header-section text-center p-4 rounded-4 mb-5">
-            <h1 class="fw-bold display-6 text-white">Data Korban & Statistik (2018-2025)</h1>
+            <h1 class="fw-bold display-6 text-white">Data Korban & Statistik</h1>
             <p class="lead mx-auto" style="max-width: 800px; color: white">
-                Halaman ini menyajikan ringkasan data kejadian erupsi, dampak, dan korban jiwa dari berbagai gunung api di Indonesia selama periode tertentu.
+                Halaman ini menyajikan ringkasan data kejadian erupsi, dampak, dan korban jiwa dari berbagai gunung api di Indonesia selama periode 2018 hingga 2025.
             </p>
         </section>
 
@@ -70,13 +109,11 @@ $conn->close();
                                 <option value="">Semua Provinsi</option>
                                 <option value="Jawa Tengah">Jawa Tengah</option>
                                 <option value="Jawa Timur">Jawa Timur</option>
+                                <option value="Jawa Barat (Bandung)">Jawa Barat</option>
                                 <option value="Sumatera Utara">Sumatera Utara</option>
-                                <option value="Bali">Bali</option>
-                                <option value="Sulawesi Utara">Sulawesi Utara</option>
-                                <option value="Jambi">Jambi</option>
-                                <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
                                 <option value="Sumatera Barat">Sumatera Barat</option>
-                                <!-- Tambahkan opsi provinsi lainnya sesuai data -->
+                                <option value="Maluku Utara">Maluku Utara</option>
+                                <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
                             </select>
                         </div>
                         <div class="col-md-3">
@@ -119,7 +156,7 @@ $conn->close();
         <section>
             <br><br>
             <h2 class="section-title">Data Kejadian Erupsi</h2>
-            <p class="section-subtitle">Laporkan kondisi terkini di lokasi Anda untuk membantu petugas melakukan penanganan.</p>
+            <p class="section-subtitle">Data historis dampak erupsi gunung api yang tercatat, difokuskan pada periode 2018 hingga 2025 (termasuk data prediksi).</p>
 
             <!-- Tabel Data Kejadian -->
             <div class="card">
@@ -137,7 +174,7 @@ $conn->close();
                 </div>
                 <div class="card-body">
                     <div class="prediction-note">
-                        <strong>Catatan:</strong> Data tahun 2024-2025 merupakan prediksi berdasarkan tren historis dan pemantauan aktivitas gunung api.
+                        <strong>Catatan:</strong> Data dengan label <b>Prediksi</b> (Tahun 2024-2025) didasarkan pada tren historis.
                     </div>
 
                     <div class="table-responsive">
@@ -168,12 +205,11 @@ $conn->close();
                         </div>
                         <nav>
                             <ul class="pagination mb-0" id="pagination">
-                                <!-- Pagination akan diisi secara dinamis -->
                             </ul>
                         </nav>
                     </div>
 
-                    <p class="source-info mt-2">Sumber Data: BNPB/BPBD/PVMBG - Terakhir diperbarui: 15 Maret 2025 | *Data 2024-2025: Prediksi</p>
+                    <p class="source-info mt-2" style="color: grey;">Sumber Data: BNPB/BPBD/PVMBG - Terakhir diperbarui: 15 Maret 2025 | *Data 2024-2025: Prediksi</p>
                 </div>
             </div>
         </section>
@@ -181,7 +217,7 @@ $conn->close();
         <section>
             <br><br>
             <h2 class="section-title">Dampak & Korban Jiwa</h2>
-            <p class="section-subtitle">Laporkan kondisi terkini di lokasi Anda untuk membantu petugas melakukan penanganan.</p>
+            <p class="section-subtitle">Visualisasi total dampak dan tren korban jiwa berdasarkan data yang tercantum.</p>
 
             <!-- Statistik & Visualisasi Data -->
             <div class="row">
@@ -257,8 +293,7 @@ $conn->close();
         <?php include 'footer.html'; ?>
     </footer>
 
-    <script>
-        // Data lengkap dari database
+        <script>
         const allData = <?php echo json_encode($dataArray); ?>;
 
         // Konfigurasi pagination
@@ -266,10 +301,14 @@ $conn->close();
         let currentPage = 1;
         let filteredData = [...allData];
         let activeFilters = {};
+        
+        let lineChartInstance = null;
+        let pieChartInstance = null;
 
         // Inisialisasi
         document.addEventListener('DOMContentLoaded', function() {
             initializeFilters();
+            // Panggil renderTable, updateStatistics, dan createCharts pertama kali
             renderTable();
             updateStatistics();
             createCharts();
@@ -284,7 +323,6 @@ $conn->close();
 
         // Inisialisasi filter
         function initializeFilters() {
-            // Set tahun default ke semua
             document.getElementById('filterTahun').value = '';
             document.getElementById('filterProvinsi').value = '';
             document.getElementById('filterStatus').value = '';
@@ -305,8 +343,8 @@ $conn->close();
             filteredData = allData.filter(item => {
                 let match = true;
 
-                // Filter tahun
-                if (tahun && item.tahun != tahun) {
+                // Filter tahun (Gunakan operator != untuk perbandingan string/angka)
+                if (tahun && item.tahun != parseInt(tahun)) {
                     match = false;
                 } else if (tahun) {
                     activeFilters.tahun = tahun;
@@ -326,7 +364,7 @@ $conn->close();
                     activeFilters.status = status;
                 }
 
-                // Filter pencarian
+                // Filter pencarian (menggunakan kolom 'gunung' dari SQL alias)
                 if (searchGunung && !item.gunung.toLowerCase().includes(searchGunung)) {
                     match = false;
                 } else if (searchGunung) {
@@ -334,7 +372,8 @@ $conn->close();
                 }
 
                 // Filter prediksi
-                if (hidePrediction && item.prediksi) {
+                // item.prediksi adalah 0 atau 1 (int)
+                if (hidePrediction && item.prediksi === 1) { 
                     match = false;
                 }
 
@@ -345,6 +384,8 @@ $conn->close();
             renderTable();
             updateActiveFiltersDisplay();
             updateStatistics();
+            // Perbarui grafik setelah filter diterapkan
+            createCharts(); 
         }
 
         // Reset filter
@@ -353,10 +394,12 @@ $conn->close();
             filteredData = [...allData];
             currentPage = 1;
             activeFilters = {};
+            document.getElementById('togglePrediction').checked = false;
+            
             renderTable();
             updateActiveFiltersDisplay();
             updateStatistics();
-            document.getElementById('togglePrediction').checked = false;
+            createCharts();
         }
 
         // Clear search
@@ -385,29 +428,33 @@ $conn->close();
 
             // Update info
             totalRecords.textContent = `${totalItems} data`;
-            pageInfo.textContent = `Menampilkan ${startIndex + 1}-${endIndex} dari ${totalItems} data`;
+            pageInfo.textContent = `Menampilkan ${totalItems === 0 ? 0 : startIndex + 1}-${endIndex} dari ${totalItems} data`;
 
             // Render rows
             tableBody.innerHTML = '';
-            currentItems.forEach((item, index) => {
-                const row = `
-                    <tr>
-                        <td>${startIndex + index + 1}</td>
-                        <td>${highlightSearch(item.gunung)}</td>
-                        <td>${item.tanggal}</td>
-                        <td>${item.lokasi}</td>
-                        <td>${item.meninggal}</td>
-                        <td>${item.luka}</td>
-                        <td>${item.pengungsi.toLocaleString()}</td>
-                        <td>${item.dampak}</td>
-                        <td>
-                            <span class="badge ${getStatusBadgeClass(item.status)}">${item.status}</span>
-                            ${item.prediksi ? '<span class="badge bg-secondary ms-1">Prediksi</span>' : ''}
-                        </td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-            });
+            if (totalItems === 0) {
+                 tableBody.innerHTML = `<tr><td colspan="9" class="text-center">Tidak ada data yang sesuai dengan filter.</td></tr>`;
+            } else {
+                currentItems.forEach((item, index) => {
+                    const row = `
+                        <tr>
+                            <td>${startIndex + index + 1}</td>
+                            <td>${highlightSearch(item.gunung)}</td>
+                            <td>${item.tanggal} (${item.tahun})</td>
+                            <td>${item.provinsi}</td>
+                            <td>${item.meninggal.toLocaleString()}</td>
+                            <td>${item.luka.toLocaleString()}</td>
+                            <td>${item.pengungsi.toLocaleString()}</td>
+                            <td>${item.dampak}</td>
+                            <td>
+                                <span class="badge ${getStatusBadgeClass(item.status)}">${item.status}</span>
+                                ${item.prediksi ? '<span class="badge bg-secondary ms-1">Prediksi</span>' : ''}
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
 
             // Render pagination
             renderPagination(totalPages);
@@ -418,6 +465,7 @@ $conn->close();
             const searchTerm = activeFilters.searchGunung;
             if (!searchTerm) return text;
 
+            // Pastikan ini hanya berfungsi untuk nama gunung, bukan untuk teks provinsi
             const regex = new RegExp(`(${searchTerm})`, 'gi');
             return text.replace(regex, '<span class="search-highlight">$1</span>');
         }
@@ -436,17 +484,34 @@ $conn->close();
             pagination.appendChild(prevLi);
 
             // Page numbers
-            for (let i = 1; i <= totalPages; i++) {
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, currentPage + 2);
+
+            if (currentPage <= 3) endPage = Math.min(totalPages, 5);
+            if (currentPage > totalPages - 2) startPage = Math.max(1, totalPages - 4);
+
+            if (startPage > 1) {
+                pagination.innerHTML += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
                 const li = document.createElement('li');
                 li.className = `page-item ${currentPage === i ? 'active' : ''}`;
                 li.innerHTML = `<a class="page-link" href="#" data-page="${i}">${i}</a>`;
                 pagination.appendChild(li);
             }
 
+            if (endPage < totalPages) {
+                pagination.innerHTML += '<li class="page-item disabled"><span class="page-link">...</span></li>';
+            }
+
+
             // Next button
             const nextLi = document.createElement('li');
             nextLi.className = `page-item ${currentPage === totalPages ? 'disabled' : ''}`;
             nextLi.innerHTML = `<a class="page-link" href="#" data-page="${currentPage + 1}">Selanjutnya</a>`;
+            pagination.appendChild(nextLi);
+
             // Add event listeners
             pagination.querySelectorAll('.page-link').forEach(link => {
                 link.addEventListener('click', function(e) {
@@ -490,26 +555,28 @@ $conn->close();
             container.innerHTML = html;
         }
 
-        // Update statistik
+        // Update statistik ringkasan
         function updateStatistics() {
-            const totalMeninggal = filteredData.reduce((sum, item) => sum + parseInt(item.meninggal), 0);
-            const totalLuka = filteredData.reduce((sum, item) => sum + parseInt(item.luka), 0);
-            const totalPengungsi = filteredData.reduce((sum, item) => sum + parseInt(item.pengungsi), 0);
+            const totalMeninggal = filteredData.reduce((sum, item) => sum + item.meninggal, 0);
+            const totalLuka = filteredData.reduce((sum, item) => sum + item.luka, 0);
+            const totalPengungsi = filteredData.reduce((sum, item) => sum + item.pengungsi, 0);
 
-            document.getElementById('statMeninggal').textContent = totalMeninggal;
-            document.getElementById('statLuka').textContent = totalLuka;
-            document.getElementById('statPengungsi').textContent = totalPengungsi.toLocaleString();
+            document.getElementById('statMeninggal').textContent = totalMeninggal.toLocaleString('id-ID');
+            document.getElementById('statLuka').textContent = totalLuka.toLocaleString('id-ID');
+            document.getElementById('statPengungsi').textContent = totalPengungsi.toLocaleString('id-ID');
         }
 
         // Helper function untuk class badge status
         function getStatusBadgeClass(status) {
             switch (status) {
-                case 'Selesai':
+                case 'Normal':
                     return 'bg-success';
-                case 'Aktif':
-                    return 'bg-warning';
-                case 'Pemantauan':
+                case 'Waspada':
                     return 'bg-info';
+                case 'Siaga':
+                    return 'bg-warning text-dark';
+                case 'Awas':
+                    return 'bg-danger';
                 default:
                     return 'bg-secondary';
             }
@@ -530,29 +597,27 @@ $conn->close();
 
         // Grafik
         function createCharts() {
-            // Hitung data untuk grafik dari filteredData
+            // Hancurkan instance chart lama jika ada
+            if (lineChartInstance) lineChartInstance.destroy();
+            if (pieChartInstance) pieChartInstance.destroy();
+
+            // 1. Data untuk Line Chart
             const yearData = {};
             filteredData.forEach(item => {
                 const year = item.tahun;
                 if (!yearData[year]) {
-                    yearData[year] = {
-                        meninggal: 0,
-                        luka: 0,
-                        pengungsi: 0
-                    };
+                    yearData[year] = { meninggal: 0, luka: 0 };
                 }
-                yearData[year].meninggal += parseInt(item.meninggal);
-                yearData[year].luka += parseInt(item.luka);
-                yearData[year].pengungsi += parseInt(item.pengungsi);
+                yearData[year].meninggal += item.meninggal;
+                yearData[year].luka += item.luka;
             });
 
-            const years = Object.keys(yearData).sort();
+            const years = Object.keys(yearData).sort((a, b) => a - b);
             const meninggalData = years.map(year => yearData[year].meninggal);
             const lukaData = years.map(year => yearData[year].luka);
 
-            // Line Chart
             const lineCtx = document.getElementById('lineChart').getContext('2d');
-            new Chart(lineCtx, {
+            lineChartInstance = new Chart(lineCtx, {
                 type: 'line',
                 data: {
                     labels: years,
@@ -578,39 +643,28 @@ $conn->close();
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'top'
-                        },
-                        title: {
-                            display: true,
-                            text: 'Tren Korban Akibat Erupsi Gunung Api'
-                        }
+                        legend: { position: 'top' },
+                        title: { display: true, text: 'Tren Korban Akibat Erupsi Gunung Api' }
                     },
                     scales: {
-                        y: {
-                            beginAtZero: true,
-                            title: {
-                                display: true,
-                                text: 'Jumlah Korban'
-                            }
+                        y: { 
+                            beginAtZero: true, 
+                            title: { display: true, text: 'Jumlah Korban' }
                         },
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'Tahun'
-                            }
+                        x: { 
+                            title: { display: true, text: 'Tahun' } 
                         }
                     }
                 }
             });
 
-            // Pie Chart
-            const totalMeninggal = filteredData.reduce((sum, item) => sum + parseInt(item.meninggal), 0);
-            const totalLuka = filteredData.reduce((sum, item) => sum + parseInt(item.luka), 0);
-            const totalPengungsi = filteredData.reduce((sum, item) => sum + parseInt(item.pengungsi), 0);
+            // 2. Data untuk Pie Chart
+            const totalMeninggal = filteredData.reduce((sum, item) => sum + item.meninggal, 0);
+            const totalLuka = filteredData.reduce((sum, item) => sum + item.luka, 0);
+            const totalPengungsi = filteredData.reduce((sum, item) => sum + item.pengungsi, 0);
 
             const pieCtx = document.getElementById('pieChart').getContext('2d');
-            new Chart(pieCtx, {
+            pieChartInstance = new Chart(pieCtx, {
                 type: 'pie',
                 data: {
                     labels: ['Korban Meninggal', 'Korban Luka', 'Pengungsi'],
@@ -624,9 +678,7 @@ $conn->close();
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: {
-                            position: 'bottom'
-                        },
+                        legend: { position: 'bottom' },
                         tooltip: {
                             callbacks: {
                                 label: function(context) {
