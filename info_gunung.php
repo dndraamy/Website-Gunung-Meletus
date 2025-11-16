@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LavaLink - "Explore Indonesia's Mighty Peaks"</title>
+    <title>Informasi Gunung Api & Mitigasi</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
@@ -21,7 +21,7 @@
         <section class="header-section text-center p-4 rounded-4 mb-5">
             <h1 class="fw-bold display-6 text-white">Informasi Gunung Api & Mitigasi</h1>
             <p class="lead mx-auto" style="max-width: 800px; color: white">
-                Halaman ini menyajikan ringkasan data kejadian erupsi, dampak, dan korban jiwa dari berbagai gunung api di Indonesia selama periode tertentu.
+                Halaman ini menyajikan daftar gunung api di Indonesia. Pilih salah satu gunung untuk melihat informasi detail, tingkat aktivitas terbaru, serta panduan mitigasi bencana yang harus dilakukan.
             </p>
         </section>
 
