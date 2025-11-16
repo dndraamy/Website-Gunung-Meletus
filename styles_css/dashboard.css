@@ -1,0 +1,447 @@
+:root {
+    --primary-red: #C0392B;
+    --primary-dark: #2C3E50;
+    --text-primary: #333333;
+    --text-secondary: #7F8C8D;
+    --bg-light: #F4F7F6;
+    --bg-white: #FFFFFF;
+    --border-color: #E0E0E0;
+    --shadow-light: 0 2px 4px rgba(0, 0, 0, 0.08);
+    --shadow-heavy: 0 8px 16px rgba(0, 0, 0, 0.1);
+    --color-awas: #E74C3C;
+    --color-siaga: #F39C12;
+    --color-waspada: #F1C40F;
+    --color-normal: #1ABC9C;
+    --color-confirm: #27AE60;
+    --color-action: #3498DB;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg-light);
+    display: flex;
+    color: var(--text-primary);
+    min-height: 100vh;
+}
+
+/* --- SIDEBAR (Panel Kiri) --- */
+.sidebar {
+    width: 260px;
+    background-color: var(--primary-dark);
+    color: white;
+    padding: 25px 0 35px 0; 
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box; 
+}
+
+.sidebar h2 {
+    text-align: center;
+    margin-bottom: 35px;
+    color: var(--bg-white);
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 0 20px;
+    letter-spacing: 1px;
+}
+
+.sidebar a {
+    color: #ECF0F1;
+    text-decoration: none;
+    padding: 15px 25px;
+    margin: 0 15px 5px 15px;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1rem;
+}
+
+.sidebar a:hover {
+    background-color: #34495E;
+    color: var(--bg-white);
+}
+
+.sidebar a.active {
+    background-color: var(--primary-red);
+    font-weight: 600;
+    color: var(--bg-white);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Logout Button Styling */
+.logout-form {
+    margin-top: auto;
+    padding: 10px 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.logout-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    color: #ECF0F1;
+    text-align: left;
+    padding: 12px 25px;
+    margin: 0;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.logout-btn:hover {
+    background-color: var(--color-awas);
+}
+
+/* --- MAIN CONTENT --- */
+.main {
+    margin-left: 260px;
+    padding: 30px;
+    width: calc(100% - 260px);
+}
+
+.page {
+    background-color: var(--bg-white);
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-heavy);
+    min-height: calc(100vh - 60px);
+}
+
+/* REVISI: Kontainer Laporan Kebencanaan agar bisa di-scroll horizontal */
+#laporan {
+    overflow-x: auto; 
+    min-height: calc(100vh - 60px); 
+}
+
+h1 {
+    color: var(--text-primary);
+    font-size: 2.2rem;
+    margin-bottom: 15px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* --- DASHBOARD CARDS --- */
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.card {
+    background-color: var(--bg-white);
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-light);
+    text-align: center;
+    transition: transform 0.3s;
+    border: 1px solid var(--border-color);
+    border-left: 6px solid var(--border-color); 
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.card h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    opacity: 0.8;
+}
+
+.card p {
+    font-size: 3rem;
+    font-weight: 800;
+    margin: 5px 0 0 0;
+}
+
+/* Status Colors for Cards */
+.card.status-awas { border-left-color: var(--color-awas); }
+.card.status-siaga { border-left-color: var(--color-siaga); }
+.card.status-waspada { border-left-color: var(--color-waspada); }
+.card.status-normal { border-left-color: var(--color-normal); }
+
+.card.status-awas p { color: var(--color-awas); }
+.card.status-siaga p { color: var(--color-siaga); }
+.card.status-waspada p { color: var(--color-waspada); }
+.card.status-normal p { color: var(--color-normal); }
+
+/* Ringkasan Aktivitas */
+.dashboard-summary {
+    background-color: #F8F9FA;
+    border: 1px solid #D5DBDB;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.dashboard-summary h2 {
+    color: var(--primary-dark);
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-top: 0;
+}
+
+.dashboard-summary li {
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+    border-bottom: 1px dashed #EAECEE;
+}
+
+.dashboard-summary li:last-child {
+    border-bottom: none;
+}
+
+.dashboard-summary li i {
+    color: var(--primary-red);
+}
+
+/* --- FILTER DAN SEARCH --- */
+.filter-controls form {
+    align-items: center;
+}
+
+.filter-controls input[type="text"],
+.filter-controls select {
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+
+.search-btn, .reset-btn {
+    padding: 10px 18px;
+    border-radius: 6px;
+    transition: all 0.3s;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+    cursor: pointer;
+    border: none;
+}
+
+.search-btn {
+    background-color: var(--primary-red);
+}
+
+.search-btn:hover {
+    background-color: #A93226;
+}
+
+.reset-btn {
+    background-color: var(--text-secondary);
+}
+
+.reset-btn:hover {
+    background-color: #626F71;
+}
+
+/* --- TABEL DATA GUNUNG & LAPORAN --- */
+table {
+    width: max-content; 
+    min-width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: var(--shadow-light);
+}
+
+th, td {
+    padding: 15px 18px;
+    text-align: left;
+    vertical-align: middle;
+    border-bottom: 1px solid #EAECEE;
+    /* Mencegah wrap pada kolom yang krusial */
+    white-space: nowrap; 
+}
+td:nth-child(5), td:nth-child(6) {
+    white-space: normal; 
+    width: 150px; 
+}
+
+
+thead th {
+    background-color: var(--primary-dark);
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #F8F9FA;
+}
+
+tbody tr:hover {
+    background-color: #EAECEE;
+}
+
+/* Status Selector */
+.status-select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid;
+    font-weight: 600;
+    transition: all 0.2s;
+    background-color: white;
+}
+.status-select.status-awas { color: var(--color-awas); border-color: var(--color-awas); background-color: #fcecec; }
+.status-select.status-siaga { color: var(--color-siaga); border-color: var(--color-siaga); background-color: #fff9e9; }
+.status-select.status-waspada { color: var(--color-waspada); border-color: var(--color-waspada); background-color: #fffde7; }
+.status-select.status-normal { color: var(--color-normal); border-color: var(--color-normal); background-color: #e8f9f5; }
+
+/* Status Indicator di Laporan */
+.status-indicator {
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    display: inline-block;
+}
+
+.status-indicator.confirmed {
+    color: var(--color-confirm);
+    background-color: #D6F5EF;
+}
+
+.status-indicator.pending {
+    color: var(--color-awas);
+    background-color: #FEF3E4;
+}
+
+/* Tombol Aksi */
+.save-status-btn {
+    background-color: var(--color-confirm);
+    padding: 8px 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.save-status-btn:hover {
+    background-color: #229954;
+}
+
+.delete-btn {
+    background-color: var(--color-awas);
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: none;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #C0392B;
+}
+
+.action-cell {
+    white-space: nowrap;
+}
+
+/* Aksi Laporan */
+.delete-btn-sm, .confirm-btn {
+    color: white;
+    padding: 6px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.2s;
+}
+
+.delete-btn-sm {
+    background-color: var(--color-awas);
+}
+
+.confirm-btn {
+    background-color: var(--color-action);
+}
+
+.delete-btn-sm:hover { background-color: #C0392B; }
+.confirm-btn:hover { background-color: #2980B9; }
+
+.action-cell i.confirmed-icon {
+    color: var(--color-confirm);
+    font-size: 1.2rem;
+    margin-right: 5px;
+}
+
+/* --- FORM PERINGATAN --- */
+#peringatan form {
+    background: #FAFAFA;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    box-shadow: var(--shadow-light);
+}
+
+#peringatan label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--primary-dark);
+}
+
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+    min-height: 150px;
+    font-size: 1rem;
+}
+
+.save-btn {
+    background-color: var(--primary-red);
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.save-btn:hover {
+    background-color: #A93226;
+}
+
+td img {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    display: block;
+    max-width: 80px;
+    height: auto;
+}
