@@ -1,0 +1,335 @@
+:root {
+    --primary-red: #991b1b;
+    --primary-dark: #7f1d1d;
+    --secondary-red: #dc2626;
+    --accent-orange: #f97316;
+    --accent-amber: #d97706;
+    --bg-light: #f8fafc;
+    --bg-white: #ffffff;
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --border-color: #e2e8f0;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+    --educational: #7c3aed;
+}
+
+body {
+    background: linear-gradient(135deg,
+        #7f1d1d 0%,
+        #991b1b 30%,
+        #b91c1c 60%,
+        #dc2626 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    position: relative;
+    color: var(--text-primary);
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 400px;
+    background: linear-gradient(to top,
+            rgba(59, 4, 4, 0.95) 0%,
+            rgba(0, 0, 0, 0.8) 100%),
+        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><defs><linearGradient id="mountain1" x1="0%25" y1="0%25" x2="0%25" y2="100%25"><stop offset="0%25" style="stop-color:%23450a0a;stop-opacity:1" /><stop offset="100%25" style="stop-color:%237f1d1d;stop-opacity:1" /></linearGradient><linearGradient id="mountain2" x1="0%25" y1="0%25" x2="0%25" y2="100%25"><stop offset="0%25" style="stop-color:%235c0f0f;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23991b1b;stop-opacity:1" /></linearGradient><linearGradient id="mountain3" x1="0%25" y1="0%25" x2="0%25" y2="100%25"><stop offset="0%25" style="stop-color:%23771414;stop-opacity:1" /><stop offset="100%25" style="stop-color:%23b91c1c;stop-opacity:1" /></linearGradient></defs><polygon fill="url(%23mountain1)" points="0,400 0,250 150,400" opacity="0.9"/><polygon fill="url(%23mountain2)" points="100,400 250,120 400,400" opacity="0.85"/><polygon fill="url(%23mountain3)" points="350,400 480,180 610,400" opacity="0.8"/><polygon fill="url(%23mountain1)" points="550,400 720,100 890,400" opacity="0.9"/><polygon fill="url(%23mountain2)" points="820,400 950,160 1080,400" opacity="0.85"/><polygon fill="url(%23mountain3)" points="1000,400 1100,220 1200,400" opacity="0.8"/><polygon fill="%23fca5a5" points="250,120 240,140 250,135 260,140" opacity="0.4"/><polygon fill="%23fca5a5" points="720,100 710,125 720,118 730,125" opacity="0.5"/><polygon fill="%23fca5a5" points="480,180 472,200 480,193 488,200" opacity="0.3"/><circle cx="250" cy="125" r="3" fill="%23fbbf24" opacity="0.6"/><circle cx="720" cy="105" r="4" fill="%23fbbf24" opacity="0.7"/></svg>') bottom center / cover no-repeat;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: relative;
+    z-index: 10;
+    flex-grow: 1;
+}
+
+/* Alert Box */
+.alert-box {
+    background: <?php echo $status_bg; ?>;
+    border: 2px solid <?php echo $status_color; ?>;
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 30px;
+}
+
+.alert-title {
+    font-weight: 700;
+    color: <?php echo $status_color; ?>;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+.detail-hero {
+    background: black;
+    padding: 80px 0 40px;
+    margin-bottom: 40px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--secondary-red);
+}
+
+.volcano-image {
+    height: 350px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    border: 3px solid var(--primary-red);
+}
+
+.content-section {
+    background: transparent;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: var(--secondary-red);
+}
+
+.section-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--bg-white);
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid var(--border-color);
+}
+
+.section-title i {
+    color: var(--bg-white);
+    font-size: 2rem;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.info-card {
+    background: var(--bg-white);
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 4px solid var(--primary-red);
+    transition: all 0.3s ease;
+    box-shadow: var(--secondary-red);
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--secondary-red);
+}
+
+.info-card i {
+    font-size: 2.5rem;
+    color: var(--secondary-red);
+    margin-bottom: 15px;
+}
+
+.info-label {
+    font-weight: 600;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 8px;
+}
+
+.info-value {
+    font-weight: 700;
+    color: var(--text-primary);
+    font-size: 1.3rem;
+}
+
+.edu-badge {
+    background: linear-gradient(135deg, var(--accent-orange), #fcd34d);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 15px;
+}
+
+.fact-box {
+    background: linear-gradient(135deg, #fef2f2, #fcdada);
+    border-left: 4px solid var(--primary-red);
+    padding: 20px;
+    border-radius: 12px;
+    margin: 20px 0;
+    color: var(--text-primary);
+}
+
+.fact-title {
+    font-weight: 700;
+    color: var(--primary-red);
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.timeline {
+    position: relative;
+    padding-left: 30px;
+    margin: 25px 0;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: var(--primary-red);
+    border-radius: 2px;
+}
+
+.timeline-item {
+    color: white;
+    position: relative;
+    margin-bottom: 25px;
+    padding-bottom: 25px;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -33px;
+    top: 5px;
+    width: 12px;
+    height: 12px;
+    background: var(--primary-red);
+    border-radius: 50%;
+    border: 3px solid var(--bg-white);
+    box-shadow: 0 0 0 3px var(--secondary-red);
+}
+
+.timeline-date {
+    font-weight: 700;
+    font-size: 20px;
+    color: #ffa5a5ff;
+    margin-bottom: 5px;
+}
+
+.text-content {
+    line-height: 1.8;
+    color: var(--bg-white);
+    font-size: 1.1rem;
+}
+
+.text-content p {
+    margin-bottom: 20px;
+}
+
+.stat-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    background: linear-gradient(135deg,
+            var(--primary-dark) 0%,
+            var(--accent-orange) 100%);
+    padding: 10px 15px;
+    border-radius: 10px;
+    margin: 5px;
+    font-weight: 600;
+    color: var(--bg-light);
+    border: 1px solid var(--border-color);
+    width: 100%;
+}
+
+.stat-badge i {
+    color: var(--bg-light);
+}
+
+.volcano-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.feature-item {
+    background: var(--bg-white);
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1px solid var(--border-color);
+    transition: all 0.3s ease;
+}
+
+.feature-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--secondary-red);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: var(--primary-red);
+    margin-bottom: 10px;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--secondary-red);
+    font-weight: 600;
+    text-decoration: none;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+.btn-back:hover {
+    color: var(--primary-dark);
+}
+
+@media (max-width: 992px) {
+    .detail-hero .row {
+        flex-direction: column-reverse;
+    }
+
+    .volcano-image {
+        margin-bottom: 30px;
+        height: 300px;
+    }
+
+    .content-section {
+        padding: 25px;
+    }
+}
+
+@media (max-width: 768px) {
+    body::before {
+        height: 250px;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+}
