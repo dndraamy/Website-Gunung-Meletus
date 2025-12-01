@@ -270,6 +270,18 @@
                     </div>
         </section>
 
+        <!-- Video Edukasi dan Simulasi -->
+        <section id="video">
+            <h2 class="section-title" style="color: white;">Video Edukasi Mitigasi</h2>
+            <p style="color: white; font-size: 1.125rem; margin-bottom: 1.5rem; text-align: center;">
+                Tonton video berikut untuk memahami lebih lanjut mengenai langkah-langkah mitigasi<br>dan simulasi penanganan bencana gunung api.
+            </p>
+            <div class="video-container" style="padding-left: 300px;">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/z3IIitKGa9A?si=oaNQH1foG53zw3ro" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p class="video-caption" style="color: white; text-align: center;"><i>Sumber Video: BNPB Indonesia</i></p>
+        </section>
+
     </main>
 
     <footer>
