@@ -66,6 +66,29 @@ if ($awas_count > 0) {
 } else {
     $pesan = $pesan_default;
 }
+
+// Data Contoh Berita Terbaru
+$berita_terbaru = [
+    [
+        'judul' => 'Gemuruh Paku Jawa The Series: 2.800 Letusan Sepanjang 2025 | Kabar Petang',
+        'sumber' => 'tvOneNews',
+        'tanggal' => '26 November 2025',
+        'link' => 'https://youtu.be/UGeAeTVy5kk?si=ENfOkPkl8QVGR4x-',
+    ],
+    [
+        'judul' => 'Gunung Merapi Luncurkan Lava 2Km, Warga Diminta Patuhi Rekomendasi Keselamatan',
+        'sumber' => 'IDX CHANNEL',
+        'tanggal' => '22 November 2025',
+        'link' => 'https://youtu.be/w-Bih3BHIXI?si=3vBn6aeq_nxed6vF',
+    ],
+    [
+        'judul' => 'Ini 3 Gunung Indonesia Status Siaga Hingga Awas',
+        'sumber' => 'Warta Kota Production',
+        'tanggal' => '23 November 2025',
+        'link' => 'https://youtu.be/GV37iJLnwxQ?si=slelZRph24CUDTeQ',
+    ],
+];
+
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +100,7 @@ if ($awas_count > 0) {
     <title>LavaLink</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link rel="stylesheet" href="styles_css/indexx.css" />
+    <link rel="stylesheet" href="styles_css/index.css" />
 </head>
 
 <body style="background-color: black;">
@@ -215,6 +238,33 @@ if ($awas_count > 0) {
             </div>
             <p class="caption-info">Indonesia memiliki lebih dari <?= $total_gunung ?> gunung api aktif yang merupakan bagian dari <b>Cincin Api Pasifik (Ring of Fire)</b>.</p>
         </section>
+        
+        <!-- START: BAGIAN BERITA TERBARU  -->
+        <section class="news-section">
+            <h2 class="section-title" style="text-align: center;">Berita Vulkanik Terbaru</h2>
+            <div class="news-list">
+                <?php foreach ($berita_terbaru as $berita): ?>
+                    <div class="news-item">
+                        <div class="news-info">
+                            <h3 class="news-title">
+                                <a href="<?= htmlspecialchars($berita['link']); ?>" target="_blank" rel="noopener noreferrer">
+                                    <?= htmlspecialchars($berita['judul']); ?>
+                                </a>
+                            </h3>
+                            <p class="news-meta">
+                                <i class="fas fa-calendar-alt"></i> <?= htmlspecialchars($berita['tanggal']); ?>
+                                <span class="separator">|</span>
+                                <i class="fas fa-rss"></i> <?= htmlspecialchars($berita['sumber']); ?>
+                            </p>
+                        </div>
+                        <a href="<?= htmlspecialchars($berita['link']); ?>" target="_blank" rel="noopener noreferrer" class="read-more-btn">
+                            Lihat Video <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        </section>
+        <!-- END: BAGIAN BERITA TERBARU -->
     </main>
 
     <footer>
